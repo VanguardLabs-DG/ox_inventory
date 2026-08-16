@@ -1,0 +1,7 @@
+modules/logs/**/
+.cfg
+node_modules
+.idea
+.zip
+.rar
+.7z
