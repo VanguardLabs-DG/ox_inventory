@@ -1,105 +1,74 @@
 import React, { useRef } from 'react';
-import { DragSource, Inventory, InventoryType, Slot, SlotWithItem } from '../../typings';
-import { useDrag, useDragDropManager, useDrop } from 'react-dnd';
+import { useDrag, useDrop } from 'react-dnd';
 import { useAppDispatch } from '../../store';
-import WeightBar from '../utils/WeightBar';
-import { onDrop } from '../../dnd/onDrop';
-import { onBuy } from '../../dnd/onBuy';
 import { Items } from '../../store/items';
-import { canCraftItem, canPurchaseItem, getItemUrl, isSlotWithItem } from '../../helpers';
-import { onUse } from '../../dnd/onUse';
-import { Locale } from '../../store/locale';
-import { onCraft } from '../../dnd/onCraft';
-import useNuiEvent from '../../hooks/useNuiEvent';
-import { ItemsPayload } from '../../reducers/refreshSlots';
-import { closeTooltip, openTooltip } from '../../store/tooltip';
+import { openTooltip, closeTooltip } from '../../store/tooltip';
+import { Slot, SlotWithItem } from '../../typings';
+import { getItemUrl, isSlotWithItem } from '../../helpers';
 import { openContextMenu } from '../../store/contextMenu';
+import { canCraftItem, canPurchaseItem } from '../../helpers';
+import WeightBar from '../utils/WeightBar';
 import { useMergeRefs } from '@floating-ui/react';
-import { maincolor } from '../../store/maincolor';
+import { onDrop } from '../../dnd/onDrop';
+import { onUse } from '../../dnd/onUse';
+import { onBuy } from '../../dnd/onBuy';
+import { onCraft } from '../../dnd/onCraft';
+import { Locale } from '../../store/locale';
 
 interface SlotProps {
-  inventoryId: Inventory['id'];
-  inventoryType: Inventory['type'];
-  inventoryGroups: Inventory['groups'];
   item: Slot;
+  inventoryType: string;
+  inventoryGroups?: Record<string, number>;
 }
 
 const InventorySlot: React.ForwardRefRenderFunction<HTMLDivElement, SlotProps> = (
-  { item, inventoryId, inventoryType, inventoryGroups },
+  { item, inventoryType, inventoryGroups },
   ref
 ) => {
-  const manager = useDragDropManager();
   const dispatch = useAppDispatch();
   const timerRef = useRef<number | null>(null);
 
-  const canDrag = React.useCallback(() => {
-    return canPurchaseItem(item, { type: inventoryType, groups: inventoryGroups }) && canCraftItem(item, inventoryType);
-  }, [item, inventoryType, inventoryGroups]);
-
-  const [{ isDragging }, drag] = useDrag<DragSource, void, { isDragging: boolean }>(
+  const [{ isDragging }, drag] = useDrag(
     () => ({
       type: 'SLOT',
       collect: (monitor) => ({
         isDragging: monitor.isDragging(),
       }),
-      item: () =>
-        isSlotWithItem(item, inventoryType !== InventoryType.SHOP)
-          ? {
-              inventory: inventoryType,
-              item: {
-                name: item.name,
-                slot: item.slot,
-              },
-              image: item?.name && `url(${getItemUrl(item) || 'none'}`,
-            }
-          : null,
-      canDrag,
+      item: () => {
+        if (!isSlotWithItem(item)) return;
+        return {
+          inventory: inventoryType,
+          item: item,
+        };
+      },
     }),
-    [inventoryType, item]
+    [item, inventoryType]
   );
 
-  const [{ isOver }, drop] = useDrop<DragSource, void, { isOver: boolean }>(
+  const [{ isOver }, drop] = useDrop(
     () => ({
       accept: 'SLOT',
       collect: (monitor) => ({
         isOver: monitor.isOver(),
       }),
-      drop: (source) => {
-        dispatch(closeTooltip());
-        switch (source.inventory) {
-          case InventoryType.SHOP:
-            onBuy(source, { inventory: inventoryType, item: { slot: item.slot } });
-            break;
-          case InventoryType.CRAFTING:
-            onCraft(source, { inventory: inventoryType, item: { slot: item.slot } });
-            break;
-          default:
-            onDrop(source, { inventory: inventoryType, item: { slot: item.slot } });
-            break;
+      drop: (source: { inventory: string; item: SlotWithItem }) => {
+        if (source.item.slot === item.slot && source.inventory === inventoryType) return;
+        if (source.inventory === 'shop') {
+          onBuy(source, { inventory: inventoryType, item: item });
+        } else if (source.inventory === 'crafting') {
+          onCraft(source, { inventory: inventoryType, item: item });
+        } else {
+          onDrop(source, { inventory: inventoryType, item: item });
         }
       },
-      canDrop: (source) =>
-        (source.item.slot !== item.slot || source.inventory !== inventoryType) &&
-        inventoryType !== InventoryType.SHOP &&
-        inventoryType !== InventoryType.CRAFTING,
     }),
-    [inventoryType, item]
+    [item, inventoryType]
   );
 
-  useNuiEvent('refreshSlots', (data: { items?: ItemsPayload | ItemsPayload[] }) => {
-    if (!isDragging && !data.items) return;
-    if (!Array.isArray(data.items)) return;
-
-    const itemSlot = data.items.find(
-      (dataItem) => dataItem.item.slot === item.slot && dataItem.inventory === inventoryId
-    );
-
-    if (!itemSlot) return;
-
-    manager.dispatch({ type: 'dnd-core/END_DRAG' });
-  });
-
-  const connectRef = (element: HTMLDivElement) => drag(drop(element));
+  const connectRef = (element: HTMLDivElement) => {
+    drag(element);
+    drop(element);
+  };
 
   const handleContext = (event: React.MouseEvent<HTMLDivElement>) => {
     event.preventDefault();
@@ -110,7 +79,7 @@ const InventorySlot: React.ForwardRefRenderFunction<HTMLDivElement, SlotProps> =
 
   const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
     dispatch(closeTooltip());
-    if (timerRef.current) clearTimeout(timerRef.current as NodeJS.Timeout);
+    if (timerRef.current) clearTimeout(timerRef.current as unknown as number);
     if (event.ctrlKey && isSlotWithItem(item) && inventoryType !== 'shop' && inventoryType !== 'crafting') {
       onDrop({ item: item, inventory: inventoryType });
     } else if (event.altKey && isSlotWithItem(item) && inventoryType === 'player') {
@@ -133,13 +102,15 @@ const InventorySlot: React.ForwardRefRenderFunction<HTMLDivElement, SlotProps> =
             : undefined,
         opacity: isDragging ? 0.4 : 1.0,
         backgroundImage: `url(${item?.name ? getItemUrl(item as SlotWithItem) : 'none'}`,
-        border: isOver ? `1px solid ${maincolor}` : '',
+        borderColor: isOver ? '#FFC857' : undefined,
       }}
     >
-    
-    {!isSlotWithItem(item) && item.slot <= 5 && inventoryType == 'player' && (
-      <div className="hotbar-slot-number">{item.slot}</div>
-    )}
+      {/* Hotbar Slot Number indicator (1 - 5) */}
+      {item.slot <= 5 && inventoryType === 'player' && (
+        <div className="absolute top-0 left-0 px-1.5 py-0.5 bg-[#E5A93C] text-[#080A0E] text-[10px] font-bold font-hud rounded-br leading-none z-10 shadow">
+          {item.slot}
+        </div>
+      )}
 
       {isSlotWithItem(item) && (
         <div
@@ -147,19 +118,19 @@ const InventorySlot: React.ForwardRefRenderFunction<HTMLDivElement, SlotProps> =
           onMouseEnter={() => {
             timerRef.current = window.setTimeout(() => {
               dispatch(openTooltip({ item, inventoryType }));
-            }, 500) as unknown as number;
+            }, 300) as unknown as number;
           }}
           onMouseLeave={() => {
             dispatch(closeTooltip());
             if (timerRef.current) {
-              clearTimeout(timerRef.current as NodeJS.Timeout);
+              clearTimeout(timerRef.current as unknown as number);
               timerRef.current = null;
             }
           }}
         >
-          <div className={`px-1 pt-1 flex items-start justify-between flex-wrap gap-1`}>
-            {item.weight > 0 && (
-              <span className="inventory-weight">
+          <div className="px-1 pt-1 flex items-start justify-between flex-wrap gap-1">
+            {item.weight > 0 ? (
+              <span className="inventory-weight font-mono">
                 {item.weight >= 1000
                   ? `${(item.weight / 1000).toLocaleString('en-us', {
                       maximumFractionDigits: 1,
@@ -169,6 +140,8 @@ const InventorySlot: React.ForwardRefRenderFunction<HTMLDivElement, SlotProps> =
                       maximumFractionDigits: 1,
                     })} g `}
               </span>
+            ) : (
+              <div />
             )}
 
             <div className="flex flex-col items-end gap-1">
@@ -187,17 +160,17 @@ const InventorySlot: React.ForwardRefRenderFunction<HTMLDivElement, SlotProps> =
                           transform: 'translateZ(0)',
                         }}
                       />
-                      <p>{item.price.toLocaleString('en-us')}</p>
+                      <p className="font-hud">{item.price.toLocaleString('en-us')}</p>
                     </div>
                   ) : (
                     <>
                       {item.price > 0 && (
                         <div
                           className={`item-slot-price-wrapper ${
-                            item.currency === 'money' || !item.currency ? 'text-green-400' : 'text-red-400'
+                            item.currency === 'money' || !item.currency ? 'text-[#FFC857]' : 'text-red-400'
                           }`}
                         >
-                          <p>
+                          <p className="font-hud">
                             {Locale.$ || 'R$'}
                             {item.price.toLocaleString('en-us')}
                           </p>
@@ -209,23 +182,16 @@ const InventorySlot: React.ForwardRefRenderFunction<HTMLDivElement, SlotProps> =
               )}
 
               {item.count && (
-                <span
-                  style={{
-                    backgroundColor: maincolor,
-                  }}
-                  className={`inventory-weight ${
-                    item.name == 'money' ? 'inventory-weight--money' : 'inventory-weight--amount'
-                  }`}
-                >
-                  {item.count.toLocaleString('en-us') + ` ${item.name == 'money' ? 'R$' : 'x'}`}
+                <span className="inventory-slot-count-badge font-hud font-bold">
+                  {item.name === 'money' ? `R$ ${item.count.toLocaleString('en-us')}` : `x${item.count.toLocaleString('en-us')}`}
                 </span>
               )}
             </div>
           </div>
 
           <div>
-            <div className="px-1 pb-2 flex items-center justify-between flex-wrap gap-1">
-              <div className="inventory-slot-label-text">
+            <div className="px-1 pb-1 flex items-center justify-between flex-wrap gap-1">
+              <div className="inventory-slot-label-text font-cyber font-semibold">
                 {item.metadata?.label ? item.metadata.label : Items[item.name]?.label || item.name}
               </div>
             </div>

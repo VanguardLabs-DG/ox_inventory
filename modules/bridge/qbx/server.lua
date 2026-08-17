@@ -36,6 +36,14 @@ SetTimeout(500, function()
     for i = 1, #playersData do setupPlayer(playersData[i]) end
 end)
 
+RegisterNetEvent('ox_inventory:requestPlayerInventory', function()
+    local src = source
+    local player = QBX:GetPlayer(src)
+    if player then
+        setupPlayer(player.PlayerData)
+    end
+end)
+
 function server.UseItem(source, itemName, data)
     local cb = QBX:CanUseItem(itemName)
     return cb and cb(source, data)

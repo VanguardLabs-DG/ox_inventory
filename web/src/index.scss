@@ -1,51 +1,62 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import url('https://fonts.googleapis.com/css2?family=Saira:ital,wght@0,100..900;1,100..900&display=swap');
 
-$mainColor: rgba(0, 0, 0, 0.8);
-$textColor: #c1c2c5;
-$mainFont: 'Saira', sans-serif;
+@import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,400;0,500;0,600;0,700;1,700&family=Rajdhani:wght@500;600;700&family=Share+Tech+Mono&family=Outfit:wght@400;500;600;700&display=swap');
 
-$primaryColor: 'red-500';
-
-$secondaryColor: rgba(12, 12, 12, 0.4);
-$secondaryColorHighlight: rgba(255, 255, 255, 0.2);
-$secondaryColorLight: rgba(0, 0, 0, 0.5);
-$secondaryColorDark: rgba(12, 12, 12, 0.8);
+/* Color Variables */
+$cpGold: #E5A93C;
+$cpGoldBright: #FFC857;
+$cpGoldLight: #FFE082;
+$cpGoldDark: #8C5D14;
+$cpGoldGlow: rgba(229, 169, 60, 0.4);
+$cpGoldBorder: rgba(229, 169, 60, 0.28);
+$mainDark: #080A0E;
+$panelBg: rgba(10, 14, 22, 0.45);
+$slotBg: rgba(14, 18, 28, 0.45);
+$slotBorder: rgba(229, 169, 60, 0.22);
+$textColor: #E6E8EC;
+$mainFont: 'Rajdhani', sans-serif;
 
 $gridCols: 5;
 $gridRows: 5;
-$gridSize: 11.5vh;
-$gridGap: 2px;
+$gridSize: 9.8vh;
+$gridGap: 4px;
 $containerSize: calc(#{$gridRows} * #{$gridSize + 0.22vh} + #{$gridRows} * #{$gridGap});
 
 body {
-  @apply m-0 h-screen bg-none overflow-hidden #{!important};
-
-  font-family: Saira, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans',
-    'Droid Sans', 'Helvetica Neue', sans-serif;
+  @apply m-0 h-screen bg-transparent overflow-hidden #{!important};
+  font-family: $mainFont;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   user-select: none;
 }
 
 #root {
-  @apply h-full;
-  --primaryColor: 22, 163, 74; /* Define como RGB */
+  @apply h-full bg-transparent #{!important};
 }
 
-code {
-  font-family: Saira, source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+.app-wrapper {
+  @apply h-full w-full bg-transparent text-white;
 }
 
 ::-webkit-scrollbar {
-  @apply hidden;
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(8, 10, 14, 0.25);
+  border-left: 1px solid rgba(229, 169, 60, 0.15);
+}
+
+::-webkit-scrollbar-thumb {
+  background: $cpGold;
+  box-shadow: 0 0 8px $cpGoldGlow;
+  border-radius: 2px;
 }
 
 p {
   @apply m-0 p-0;
-
   font-family: $mainFont;
 }
 
@@ -56,95 +67,83 @@ input[type='number']::-webkit-outer-spin-button {
   appearance: none;
 }
 
-.app-wrapper {
-  @apply h-full w-full text-white;
-}
-
-.context-menu-list {
-  @apply bg-dark/90 border border-zinc-800 p-2 outline-none flex flex-col rounded-md;
-
-  min-width: 130px;
-  color: $textColor;
-  font-size: 0.9rem;
-}
-
-.context-menu-item  {
-  @apply px-4 py-2 rounded-md bg-transparent outline-none flex justify-between items-center transition-colors duration-150;
-  color: $textColor;
-
-  &:active {
-    transform: none;
-  }
-
-  &:hover {
-    @apply cursor-pointer bg-white/5 text-gray-300;
-  }
-}
-
-.tooltip-description {
-  @apply pt-1;
-}
-
-.tooltip-markdown > p {
-  @apply m-0;
-}
-
-button:active {
-  transform: translateY(3px);
-}
-
-.item-drag-preview {
-  width: 7.7vh;
-  height: 7.7vh;
-  z-index: 1;
-  position: fixed;
-  pointer-events: none;
+/* Fullscreen Radial Vignette Background */
+.inventory-background {
+  position: fixed !important;
   top: 0;
   left: 0;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: 7vh;
-  image-rendering: -webkit-optimize-contrast;
+  width: 100vw !important;
+  height: 100vh !important;
+  pointer-events: none !important;
+  background: radial-gradient(circle at 50% 50%, rgba(20, 26, 38, 0.35) 0%, rgba(8, 10, 16, 0.72) 65%, rgba(4, 5, 8, 0.9) 100%) !important;
+  z-index: 0 !important;
 }
 
-.inventory-wrapper {
-  @apply grid grid-cols-7 gap-5 items-center justify-center h-full mx-0;
+/* Context Menu */
+.context-menu-list {
+  background: rgba(10, 14, 22, 0.92) !important;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid $cpGoldBorder !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.8), 0 0 15px rgba(229, 169, 60, 0.25) !important;
+  padding: 6px;
+  outline: none;
+  display: flex;
+  flex-direction: column;
+  border-radius: 3px;
+  min-width: 140px;
+  color: $textColor;
+  font-family: $mainFont;
+  z-index: 50;
+}
 
-  @screen lg {
-    @apply mx-8;
-  }
+.context-menu-item {
+  padding: 6px 12px;
+  border-radius: 2px;
+  background: transparent;
+  outline: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 600;
+  font-size: 0.95rem;
+  letter-spacing: 0.05em;
+  color: #D1D5DB;
+  transition: all 150ms ease-in-out;
 
-  @screen k {
-    @apply mx-48;
-  }
-
-  @screen 4k {
-    @apply mx-80;
+  &:hover {
+    cursor: pointer;
+    background: rgba(229, 169, 60, 0.2);
+    color: $cpGoldBright;
+    border-left: 2px solid $cpGoldBright;
   }
 }
 
-.inventory-control {
-  @apply mt-14 rounded flex;
-  height: $containerSize;
-}
-
+/* Useful Controls Dialog */
 .useful-controls-dialog {
-  background-color: $mainColor;
+  background: rgba(10, 14, 22, 0.95) !important;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid $cpGoldBorder !important;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.9) !important;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   color: $textColor;
-  width: 450px;
+  width: 480px;
   display: flex;
   flex-direction: column;
-  padding: 16px;
+  padding: 20px;
   border-radius: 4px;
   gap: 16px;
+  z-index: 60;
 }
 
 .useful-controls-dialog-overlay {
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(4px);
 }
 
 .useful-controls-dialog-title {
@@ -152,140 +151,136 @@ button:active {
   width: 100%;
   justify-content: space-between;
   align-items: center;
+  font-family: 'Chakra Petch', sans-serif;
+  font-weight: 700;
   font-size: 18px;
+  color: $cpGoldBright;
+  border-bottom: 1px solid $cpGoldBorder;
+  padding-bottom: 8px;
 }
 
 .useful-controls-dialog-close {
-  width: 25px;
-  height: 25px;
+  width: 26px;
+  height: 26px;
   padding: 6px;
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: 4px;
-  fill: $textColor;
+  border-radius: 2px;
+  fill: #9CA3AF;
+  cursor: pointer;
+  transition: all 150ms;
+
   &:hover {
-    background-color: $secondaryColorHighlight;
-    cursor: pointer;
+    background-color: rgba(239, 68, 68, 0.3);
+    fill: #EF4444;
   }
 }
 
 .useful-controls-content-wrapper {
   display: flex;
   flex-direction: column;
-  gap: 20px;
-}
+  gap: 14px;
 
-.divider {
-  width: 100%;
-  height: 1px;
-  background-color: rgba(255, 255, 255, 0.12);
+  p {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 14px;
+    color: #D1D5DB;
+  }
+
+  kbd {
+    display: inline-block;
+    padding: 2px 6px;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 12px;
+    font-weight: bold;
+    color: $cpGoldBright;
+    background: rgba(229, 169, 60, 0.15);
+    border: 1px solid $cpGoldBorder;
+    border-radius: 2px;
+  }
 }
 
 .useful-controls-button {
   position: absolute !important;
-  bottom: 25px;
-  right: 25px;
-  transition: 200ms !important;
-  border: none;
-  color: rgb(255, 255, 255);
-  width: 36px;
-  height: 36px;
+  bottom: 16px;
+  right: 16px;
+  transition: all 200ms !important;
+  border: 1px solid $cpGoldBorder !important;
+  color: $cpGoldBright !important;
+  width: 34px;
+  height: 34px;
   display: flex;
   justify-content: center;
   align-items: center;
-  fill: white;
-  border-radius: 10% !important;
-  background-color: $secondaryColor !important;
+  border-radius: 4px !important;
+  background-color: rgba(10, 14, 22, 0.75) !important;
+  backdrop-filter: blur(8px);
+  cursor: pointer;
+  z-index: 20;
+
   &:hover {
-    background-color: $secondaryColorDark !important;
-    cursor: pointer;
+    border-color: $cpGoldBright !important;
+    box-shadow: 0 0 12px $cpGoldGlow !important;
+    transform: scale(1.05);
   }
 }
 
-.useful-controls-exit-button {
-  position: absolute !important;
-  right: 8px;
-  top: 8px;
-  border-radius: 2.5% !important;
-  color: grey !important;
-}
-
-// Dialog is used fro useful controls window
-
-
-// inventory grids
-.inventory-grid-wrapper {
-  display: flex;
-  flex-direction: column;
-  gap: calc($gridGap * 4);
-}
-.inventory-grid-header-wrapper {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  p {
-    font-size: 16px;
-  }
-}
-
+/* Inventory Grids */
 .inventory-grid-container {
-  @apply grid grid-cols-5 gap-1;
-
-  height: $containerSize;
-  grid-auto-rows: $gridSize + 1.22vh;
-  overflow-y: scroll;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 4px;
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 2px;
 }
 
-// inventory slots
+/* Inventory Slots - Translucent Glassmorphism */
 .inventory-slot {
-  @apply bg-dark bg-opacity-50 rounded border border-transparent transition-colors duration-150;
-
-  &:hover {
-    @apply bg-opacity-40 border-gray-400/20;
-  }
-
+  background-color: rgba(14, 18, 28, 0.45) !important;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(229, 169, 60, 0.22) !important;
+  border-radius: 3px;
+  transition: all 150ms ease-in-out;
   background-repeat: no-repeat;
   background-position: center;
+  background-size: 5.5vh;
+  height: 9.5vh;
   image-rendering: -webkit-optimize-contrast;
   position: relative;
-  background-size: 6.5vh;
   color: $textColor;
+
+  &:hover {
+    background-color: rgba(24, 30, 46, 0.75) !important;
+    border-color: #FFC857 !important;
+    box-shadow: 0 0 12px rgba(229, 169, 60, 0.38) !important;
+    transform: translateY(-1px);
+  }
 }
 
 .inventory-slot--empty {
-  @apply bg-opacity-5;
+  background-color: rgba(10, 14, 22, 0.22) !important;
+  border: 1px dashed rgba(229, 169, 60, 0.14) !important;
 
   &:hover {
-    @apply border-gray-300/10;
+    border-color: rgba(229, 169, 60, 0.35) !important;
+    background-color: rgba(14, 18, 28, 0.45) !important;
   }
-}
-
-.inventory-slot-label-box {
-  @apply inline-flex max-w-full bg-dark/0 bg-opacity-50 px-2 py-1 rounded-md;
-
-  color: $textColor;
 }
 
 .inventory-slot-label-text {
-  @apply capitalize text-gray-50;
-
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
-
-  font-weight: 400;
-  font-family: $mainFont;
-  font-size: 14px;
+  overflow: hidden;
+  font-weight: 600;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 11px;
   line-height: 11px;
-
-  @screen 2k {
-    @apply text-sm;
-  }
-
-  @screen 4k {
-    @apply text-xl;
-  }
+  color: #F3F4F6;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
 }
 
 .hotbar-slot-number {
@@ -298,55 +293,25 @@ button:active {
   justify-content: center;
   width: 100%;
   height: 100%;
-  font-size: 3.5rem;
-  color: rgba(255, 255, 255, 0.2); /* Valor equivalente a text-gray-50/20 */
-  pointer-events: none; /* Para garantir que a numeração não bloqueie interações com a imagem */
-}
-
-
-
-
-.inventory-slot-number {
-  @apply h-5 px-1.5 inline-flex items-center justify-center rounded-md text-xs text-gray-50;
-
-  @screen 2k {
-    @apply text-sm;
-  }
-
-  @screen 4k {
-    @apply text-xl h-8 px-2.5;
-  }
-
-  font-family: $mainFont;
+  font-size: 2.5rem;
+  font-family: 'Chakra Petch', sans-serif;
+  font-weight: 700;
+  color: rgba(229, 169, 60, 0.12);
+  pointer-events: none;
 }
 
 .inventory-weight {
-  @apply h-3 px-0.5 inline-flex items-center justify-center rounded-sm text-xs text-gray-50;
-
-  @screen 2k {
-    @apply text-sm;
-  }
-
-  @screen 4k {
-    @apply text-xl h-8 px-2.5;
-  }
-
-  font-family: $mainFont;
-
-  &--amount {
-    // @apply $primaryColor;
-    background-color: green;
-  }
-
-  &--money {
-    // @apply $primaryColor;
-    background-color: green;
-  }
+  @apply h-3.5 px-1 inline-flex items-center justify-center rounded text-[9px] text-white text-opacity-80;
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(229, 169, 60, 0.2);
+  font-family: 'Share Tech Mono', monospace;
 }
 
-.inventory-background {
-  @apply absolute h-screen w-full top-0 left-0;
-  background: linear-gradient(to left, rgba(var(--primaryColor), 1), rgba(0, 0, 0, 0.3));
+.inventory-slot-count-badge {
+  @apply h-3.5 px-1.5 inline-flex items-center justify-center rounded text-[10px] text-[#080A0E] font-bold;
+  background: linear-gradient(135deg, #E5A93C, #FFC857);
+  font-family: 'Chakra Petch', sans-serif;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
 }
 
 .item-slot-wrapper {
@@ -354,29 +319,6 @@ button:active {
   flex-direction: column;
   justify-content: space-between;
   height: 100%;
-
-  p {
-    font-size: 12px;
-
-    @screen 4k {
-      @apply text-2xl;
-    }
-  }
-}
-
-.item-slot-header-wrapper {
-  @apply flex flex-row justify-end;
-}
-
-.item-hotslot-header-wrapper {
-  @apply pl-1 py-1;
-
-  @extend .item-slot-header-wrapper;
-  justify-content: space-between !important;
-}
-
-.item-slot-info-wrapper {
-  @apply inline-flex items-center justify-between;
 }
 
 .item-slot-currency-wrapper {
@@ -384,33 +326,39 @@ button:active {
   flex-direction: row;
   justify-content: flex-end;
   align-items: center;
-  padding-right: 3px;
-  p {
-    font-size: 14px;
-    text-shadow: 0.1vh 0.1vh 0 rgba(0, 0, 0, 0.7);
-  }
+  padding-right: 2px;
+  color: $cpGoldBright;
+  font-size: 12px;
+  font-weight: bold;
 }
 
 .item-slot-price-wrapper {
-  @apply flex flex-row justify-end text-xs bg-dark/0 px-1 rounded-md;
-
-  @screen 2k {
-    @apply text-sm;
-  }
+  @apply flex flex-row justify-end text-[10px] px-1 rounded;
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(229, 169, 60, 0.3);
+  font-family: 'Chakra Petch', sans-serif;
+  font-weight: bold;
 }
 
+/* Tooltips */
 .tooltip-wrapper {
-  @apply flex flex-col bg-dark border border-zinc-700 rounded-md pointer-events-none z-30;
-
-  width: 200px;
-  padding: 8px;
+  background: rgba(10, 14, 22, 0.94) !important;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid $cpGoldBorder !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.85), 0 0 15px rgba(229, 169, 60, 0.2) !important;
+  border-radius: 3px;
+  pointer-events: none;
+  z-index: 40;
+  width: 220px;
+  padding: 10px;
   min-width: 200px;
   color: $textColor;
   font-family: $mainFont;
 
   p {
-    font-size: 14px;
-    font-weight: 400;
+    font-size: 13px;
+    font-weight: 500;
   }
 }
 
@@ -419,197 +367,79 @@ button:active {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  border-bottom: 1px solid rgba(229, 169, 60, 0.25);
+  padding-bottom: 4px;
+  margin-bottom: 6px;
+
   p {
     font-size: 15px;
-    font-weight: 400;
+    font-weight: 700;
+    color: $cpGoldBright;
+    font-family: 'Chakra Petch', sans-serif;
+    letter-spacing: 0.05em;
   }
 }
 
-.tooltip-crafting-duration {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  svg {
-    padding-right: 3px;
-  }
-  p {
-    font-size: 14px;
-  }
+.tooltip-description {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 13px;
+  line-height: 1.3;
+  color: #D1D5DB;
 }
 
-.tooltip-ingredients {
-  padding-top: 5px;
-}
-
-.tooltip-ingredient {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  img {
-    width: 28px;
-    height: 28px;
-    padding-right: 5px;
-  }
-}
-
-// hotbar
+/* Hotbar */
 .hotbar-container {
-  @apply flex items-center justify-center gap-1 w-full absolute bottom-4;
+  @apply flex items-center justify-center gap-2 w-full absolute bottom-4 pointer-events-none;
 }
 
 .hotbar-item-slot {
   @extend .inventory-slot;
-  @apply bg-zinc-800 bg-opacity-70;
-
-  &:hover {
-    @apply bg-opacity-60;
-  }
-
-  width: $gridSize;
-  height: $gridSize;
-  z-index: 2;
+  background-color: rgba(10, 14, 22, 0.85) !important;
+  border: 1px solid $cpGoldBorder !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.8) !important;
+  width: 8vh;
+  height: 8vh;
+  z-index: 30;
 }
 
-.hotbar-slot-header-wrapper {
-  @apply flex flex-row justify-between p-0.5;
-}
-
-// item notifications
-
+/* Item Notifications */
 .item-notification-container {
   display: flex;
   overflow-x: scroll;
   flex-wrap: nowrap;
-  gap: 2px;
+  gap: 4px;
   position: absolute;
-  bottom: 20vh;
+  bottom: 18vh;
   left: 50%;
-  width: 100%;
-  margin-left: calc(50% - calc($gridSize/2));
   transform: translate(-50%);
+  z-index: 30;
 }
 
 .item-notification-action-box {
   width: 100%;
-  color: $textColor;
-  background-color: $secondaryColor;
+  color: $cpGoldBright;
+  background-color: rgba(10, 14, 22, 0.9);
+  border: 1px solid $cpGoldBorder;
+  font-family: 'Chakra Petch', sans-serif;
+  font-weight: bold;
+  font-size: 11px;
   text-transform: uppercase;
   text-align: center;
-  border-top-left-radius: 0.25vh;
-  border-top-right-radius: 0.25vh;
-  font-family: $mainFont;
-  p {
-    font-size: 11px;
-    padding: 2px;
-    font-weight: 600;
-  }
+  border-top-left-radius: 2px;
+  border-top-right-radius: 2px;
 }
 
-.item-notification-item-box {
-  @extend .inventory-slot;
-  @apply bg-dark bg-opacity-50 py-1;
-
-  &:hover {
-    @apply bg-opacity-40;
-  }
-
-  height: $gridSize;
-  width: $gridSize;
-}
-
-.durability-bar {
-  background: rgba(0, 0, 0, 0.5);
-  height: 3px;
-  overflow: hidden;
-}
-
-.weight-bar {
-  background: rgba(0, 0, 0, 0.4);
-  border: 1px inset rgba(0, 0, 0, 0.1);
-  height: 0.8vh;
-  border-radius: 5%;
-  overflow: hidden;
-}
-
-.transition-fade-enter {
-  opacity: 0;
-}
-
-.transition-fade-enter-active {
-  opacity: 1;
-  transition: opacity 200ms;
-}
-
-.transition-fade-exit {
-  opacity: 1;
-}
-
-.transition-fade-exit-active {
-  opacity: 0;
-  transition: opacity 200ms;
-}
-
-.transition-slide-up-enter {
-  transform: translateY(200px)
-}
-
-.transition-slide-up-enter-active {
-  transform: translateY(0px);
-  transition: all 200ms;
-}
-
-.transition-slide-up-exit {
-  transform: translateY(0px);
-}
-
-.transition-slide-up-exit-active {
-  transform: translateY(200px);
-  transition: all 200ms;
-}
-
-.inventory-control__button {
-  @apply w-28 h-14 inline-flex items-center justify-center text-sm rounded-md bg-dark text-center transition-colors duration-150 border border-transparent;
-
-  @screen 2k {
-    @apply w-32 h-20;
-  }
-
-  @screen 4k {
-    @apply w-40 h-32;
-  }
-
-  &:hover {
-    @apply bg-zinc-900/50 border-gray-400/50;
-  }
-
-  svg {
-    @apply h-6 w-6 text-gray-400;
-  }
-
-  &--close {
-    svg {
-      @apply text-red-500;
-    }
-
-    &:hover {
-      @apply border-red-500;
-    }
-  }
-
-  &--use {
-    svg {
-      @apply text-gray-400;
-    }
-
-    &:hover {
-      @apply border-gray-400;
-    }
-  }
-}
-
-.bar-icon {
-  svg {
-    @apply h-5 w-5 text-gray-800;
-  }
+.item-drag-preview {
+  width: 7.7vh;
+  height: 7.7vh;
+  z-index: 100;
+  position: fixed;
+  pointer-events: none;
+  top: 0;
+  left: 0;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 7vh;
+  image-rendering: -webkit-optimize-contrast;
+  filter: drop-shadow(0 0 10px rgba(229, 169, 60, 0.6));
 }

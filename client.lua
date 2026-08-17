@@ -262,12 +262,63 @@ function client.openInventory(inv, data)
         end
     end
 
+local isPedScreenActive = false
+local PlayerPedPreview = nil
+
+local function CreatePedScreen()
+    if isPedScreenActive then return end
+    isPedScreenActive = true
+    if PlayerPedPreview then
+        DeleteEntity(PlayerPedPreview)
+        PlayerPedPreview = nil
+    end
+
+    Wait(150)
+    CreateThread(function()
+        SetFrontendActive(true)
+        local menuType = GetHashKey("FE_MENU_VERSION_EMPTY_NO_BACKGROUND")
+        ActivateFrontendMenu(menuType, true, -1)
+        ReplaceHudColourWithRgba(117, 0, 0, 0, 0)
+        Citizen.Wait(100)
+        SetMouseCursorVisibleInMenus(false)
+        if PlayerPedPreview == nil then
+            local ped = PlayerPedId()
+            local coords = GetEntityCoords(ped)
+            PlayerPedPreview = ClonePed(ped, false, false, true)
+            FreezeEntityPosition(PlayerPedPreview, true)
+            SetEntityCoords(PlayerPedPreview, coords.x, coords.y, coords.z - 10.0)
+            SetPauseMenuPedSleepState(true)
+            FinalizeHeadBlend(PlayerPedPreview)
+            FreezeEntityPosition(PlayerPedPreview, true)
+            SetEntityVisible(PlayerPedPreview, false, 0)
+            NetworkSetEntityInvisibleToNetwork(PlayerPedPreview, false)
+
+            GivePedToPauseMenu(PlayerPedPreview, 1)
+            SetPauseMenuPedLighting(true)
+        end
+        Citizen.CreateThread(function()
+            SetMouseCursorVisibleInMenus(false)
+        end)
+        isPedScreenActive = false
+    end)
+end
+
+local function Remove2d()
+    if PlayerPedPreview then
+        DeleteEntity(PlayerPedPreview)
+        PlayerPedPreview = nil
+    end
+    SetFrontendActive(false)
+    ReplaceHudColourWithRgba(117, 45, 44, 44, 200)
+end
+
     plyState.invOpen = true
 
     SetInterval(client.interval, 100)
     SetNuiFocus(true, true)
-    SetNuiFocusKeepInput(true)
+    SetNuiFocusKeepInput(false)
     closeTrunk()
+    CreatePedScreen()
 
     if client.screenblur then Utils.blurIn() end
 
@@ -323,7 +374,7 @@ RegisterNetEvent('ox_inventory:forceOpenInventory', function(left, right)
 
 	SetInterval(client.interval, 100)
 	SetNuiFocus(true, true)
-	SetNuiFocusKeepInput(true)
+	SetNuiFocusKeepInput(false)
 	closeTrunk()
 
 	if client.screenblur then Utils.blurIn() end
@@ -887,6 +938,7 @@ function client.closeInventory(server)
 		SetNuiFocusKeepInput(false)
 		Utils.blurOut()
 		closeTrunk()
+		Remove2d()
 		SendNUIMessage({ action = 'closeInventory' })
 		SetInterval(client.interval, 200)
 		Wait(200)
@@ -1613,6 +1665,31 @@ RegisterNUICallback('getItemData', function(itemName, cb)
 	cb(Items[itemName])
 end)
 
+RegisterNUICallback('SetClothes', function(data, cb)
+	cb(1)
+	if data and data.name then
+		if GetResourceState('illenium-appearance') == 'started' then
+			TriggerEvent('illenium-appearance:client:toggleClothing', data.name)
+		elseif GetResourceState('qbx_core') == 'started' then
+			TriggerEvent('qbx_core:client:toggleClothing', data.name)
+		end
+	end
+end)
+
+RegisterNUICallback('TakeOffClothes', function(data, cb)
+	cb(1)
+	if data then
+		TriggerServerEvent('vanguard_inventory:server:TakeOffClothes', data)
+	end
+end)
+
+RegisterNUICallback('EquipClothes', function(data, cb)
+	cb(1)
+	if data and data.item then
+		TriggerServerEvent('vanguard_inventory:swaptoInventoryToClothingInventory', data.item)
+	end
+end)
+
 RegisterNUICallback('removeComponent', function(data, cb)
 	cb(1)
 
@@ -1918,3 +1995,10 @@ lib.callback.register('ox_inventory:getVehicleData', function(netid)
 		return GetEntityModel(entity), GetVehicleClass(entity)
 	end
 end)
+
+AddEventHandler('onClientResourceStart', function(resourceName)
+	if resourceName ~= GetCurrentResourceName() then return end
+	Wait(500)
+	TriggerServerEvent('ox_inventory:requestPlayerInventory')
+end)
+
