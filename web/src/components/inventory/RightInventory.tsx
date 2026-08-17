@@ -26,10 +26,9 @@ export const RightInventory: React.FC = () => {
     }
   });
 
-  // Check if player has a backpack item in clothing or inventory
+  // Check if player has a backpack equipped
   const equippedBag = hasEquippedBackpack || leftInventory?.items?.some((i) => i?.name?.includes('bag') || i?.name?.includes('backpack'));
 
-  // Backpack inventory mock or real container fallback
   const activeBackpack: Inventory = backpackInventory || {
     id: 'player-backpack',
     type: 'container',
@@ -75,7 +74,7 @@ export const RightInventory: React.FC = () => {
         ) : equippedBag ? (
           <InventoryGrid inventory={activeBackpack} customTitle="MOCHILA" isRight />
         ) : (
-          <div className="w-full h-full flex flex-col items-center justify-center bg-[rgba(10,14,22,0.45)] border border-white/[0.06] rounded-[8px] p-6 backdrop-blur-md shadow-2xl text-center">
+          <div className="w-full h-full flex flex-col items-center justify-center bg-[rgba(10,14,22,0.45)] border border-white/[0.06] rounded-[8px] p-6 text-center">
             <div className="w-14 h-14 rounded-full bg-white/[0.04] border border-white/[0.08] flex items-center justify-center text-white/30 mb-3">
               <svg className="w-7 h-7" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-6 0h-4V4h4v2z" />

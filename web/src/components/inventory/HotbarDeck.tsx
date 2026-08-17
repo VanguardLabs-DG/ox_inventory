@@ -23,7 +23,7 @@ export const HotbarDeck: React.FC<HotbarDeckProps> = ({ inventory }) => {
       </div>
 
       {/* 5 Quick Slots Grid */}
-      <div className="w-full grid grid-cols-5 gap-2 bg-[rgba(10,14,22,0.45)] border border-white/[0.06] rounded-[8px] p-2.5 backdrop-blur-md shadow-2xl">
+      <div className="w-full grid grid-cols-5 gap-2 bg-[rgba(10,14,22,0.45)] border border-white/[0.06] rounded-[8px] p-2.5 shadow-2xl">
         {hotbarSlots.map((itemSlot) => (
           <div key={`hotbar-deck-slot-${itemSlot.slot}`} className="relative">
             <InventorySlot

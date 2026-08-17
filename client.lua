@@ -262,62 +262,12 @@ function client.openInventory(inv, data)
         end
     end
 
-local isPedScreenActive = false
-local PlayerPedPreview = nil
-
-local function CreatePedScreen()
-    if isPedScreenActive then return end
-    isPedScreenActive = true
-    if PlayerPedPreview then
-        DeleteEntity(PlayerPedPreview)
-        PlayerPedPreview = nil
-    end
-
-    CreateThread(function()
-        SetFrontendActive(true)
-        local menuType = GetHashKey("FE_MENU_VERSION_EMPTY_NO_BACKGROUND")
-        ActivateFrontendMenu(menuType, true, -1)
-        ReplaceHudColourWithRgba(117, 0, 0, 0, 0)
-        SetMouseCursorVisibleInMenus(false)
-        if PlayerPedPreview == nil then
-            local ped = PlayerPedId()
-            local coords = GetEntityCoords(ped)
-            PlayerPedPreview = ClonePed(ped, false, false, true)
-            FreezeEntityPosition(PlayerPedPreview, true)
-            SetEntityCoords(PlayerPedPreview, coords.x, coords.y, coords.z - 10.0)
-            SetPauseMenuPedSleepState(true)
-            FinalizeHeadBlend(PlayerPedPreview)
-            FreezeEntityPosition(PlayerPedPreview, true)
-            SetEntityVisible(PlayerPedPreview, false, 0)
-            NetworkSetEntityInvisibleToNetwork(PlayerPedPreview, false)
-
-            GivePedToPauseMenu(PlayerPedPreview, 1)
-            SetPauseMenuPedLighting(true)
-        end
-        Wait(50)
-        SetMouseCursorVisibleInMenus(false)
-        SetNuiFocus(true, true)
-        SetNuiFocusKeepInput(false)
-        isPedScreenActive = false
-    end)
-end
-
-local function Remove2d()
-    if PlayerPedPreview then
-        DeleteEntity(PlayerPedPreview)
-        PlayerPedPreview = nil
-    end
-    SetFrontendActive(false)
-    ReplaceHudColourWithRgba(117, 45, 44, 44, 200)
-end
-
     plyState.invOpen = true
 
     SetInterval(client.interval, 100)
     SetNuiFocus(true, true)
     SetNuiFocusKeepInput(false)
     closeTrunk()
-    CreatePedScreen()
 
     if client.screenblur then Utils.blurIn() end
 
@@ -937,7 +887,6 @@ function client.closeInventory(server)
 		SetNuiFocusKeepInput(false)
 		Utils.blurOut()
 		closeTrunk()
-		Remove2d()
 		SendNUIMessage({ action = 'closeInventory' })
 		SetInterval(client.interval, 200)
 		Wait(200)

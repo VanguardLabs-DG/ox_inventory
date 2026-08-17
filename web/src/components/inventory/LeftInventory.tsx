@@ -4,7 +4,7 @@ import HotbarDeck from './HotbarDeck';
 import { useAppSelector } from '../../store';
 import { selectLeftInventory } from '../../store/inventory';
 
-const LeftInventory: React.FC = () => {
+export const LeftInventory: React.FC = () => {
   const leftInventory = useAppSelector(selectLeftInventory);
 
   return (
@@ -12,7 +12,7 @@ const LeftInventory: React.FC = () => {
       {/* Top: 5-Slot Hotbar Deck */}
       <HotbarDeck inventory={leftInventory} />
 
-      {/* Main Grid: Slots 6+ */}
+      {/* Main Grid: Slots 6+ (Bolsos) */}
       <div className="flex-1 w-full overflow-hidden">
         <InventoryGrid inventory={leftInventory} />
       </div>

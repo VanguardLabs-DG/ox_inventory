@@ -48,10 +48,10 @@ const Inventory: React.FC = () => {
     <>
       <Fade in={inventoryVisible}>
         <div className="h-screen w-screen flex flex-col justify-between box-border bg-transparent overflow-hidden select-none relative font-cyber pb-3">
-          {/* Holographic CRT Scanline & Radial Vignette Background */}
+          {/* 100% Transparent Scanline Background */}
           <div className="inventory-background" />
 
-          {/* Top Bar Header (Navigation + Player ID Card) */}
+          {/* Top Bar Header */}
           <CyberpunkHeader
             onClose={() => setInventoryVisible(false)}
             activeTab={activeTab}
@@ -60,12 +60,12 @@ const Inventory: React.FC = () => {
 
           {/* Main 4-Column Layout */}
           <div className="flex-1 w-full grid grid-cols-[22%_16%_30%_30%] gap-3.5 px-6 py-2 relative overflow-hidden">
-            {/* Coluna 1: Personagem (3D Cloned Ped) */}
+            {/* Coluna 1: Personagem 3D */}
             <div className="w-full h-full flex flex-col overflow-hidden">
               <PedViewport />
             </div>
 
-            {/* Coluna 2: Equipamento (Painel Superior) + Status (Painel Inferior Independente) */}
+            {/* Coluna 2: Equipamento (Topo) + Status (Base) */}
             <div className="w-full h-full flex flex-col justify-between overflow-hidden gap-3">
               <div className="flex-1 w-full overflow-hidden">
                 <ClothesColumn />
@@ -73,17 +73,17 @@ const Inventory: React.FC = () => {
               <PlayerStatsCard />
             </div>
 
-            {/* Coluna 3: Hotbar / Bolsos do Jogador */}
+            {/* Coluna 3: Hotbar (1-5) + Bolsos (6+) */}
             <div className="w-full h-full flex flex-col overflow-hidden">
               <LeftInventory />
             </div>
 
-            {/* Coluna 4: Chão / Mochila (Secundário) */}
+            {/* Coluna 4: Toggles [CHÃO] [MOCHILA] + Grade */}
             <div className="w-full h-full flex flex-col overflow-hidden">
               <RightInventory />
             </div>
 
-            {/* Floating Overlays */}
+            {/* Overlays */}
             <Tooltip />
             <InventoryContext />
           </div>

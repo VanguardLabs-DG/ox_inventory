@@ -27,7 +27,7 @@ export const CyberpunkHeader: React.FC<HeaderProps> = ({
   const tabs = ['INVENTÁRIO', 'CRIAÇÃO'];
 
   return (
-    <div className="w-full h-14 flex items-center justify-between px-6 select-none relative z-20 border-b border-white/[0.06] bg-[rgba(10,14,20,0.55)] backdrop-blur-md">
+    <div className="w-full h-14 flex items-center justify-between px-6 select-none relative z-20 border-b border-white/[0.06] bg-[rgba(10,14,20,0.55)]">
       {/* Top Left: Player Identity Card */}
       <div className="flex items-center space-x-3">
         <div className="w-9 h-9 rounded-[6px] bg-white/[0.05] border border-white/[0.08] flex items-center justify-center text-white/70">
@@ -58,15 +58,15 @@ export const CyberpunkHeader: React.FC<HeaderProps> = ({
             <button
               key={tab}
               onClick={() => onTabChange && onTabChange(tab)}
-              className={`text-sm font-semibold tracking-widest transition-all duration-150 relative py-1 cursor-pointer ${
+              className={`relative py-3.5 text-xs font-semibold tracking-wider transition-all duration-140 cursor-pointer ${
                 isActive
                   ? 'text-[#FFC857]'
-                  : 'text-white/40 hover:text-white/80'
+                  : 'text-white/50 hover:text-white/80'
               }`}
             >
               {tab}
               {isActive && (
-                <div className="w-full h-[2px] bg-[#FFC857] absolute bottom-0 left-0 rounded-full shadow-[0_0_8px_rgba(255,200,87,0.6)]" />
+                <div className="absolute bottom-0 left-0 w-full h-[2px] bg-[#E5A93C] rounded-full" />
               )}
             </button>
           );
@@ -74,17 +74,13 @@ export const CyberpunkHeader: React.FC<HeaderProps> = ({
       </div>
 
       {/* Top Right: Ghost Exit Button */}
-      <div className="flex items-center">
-        <button
-          onClick={handleExit}
-          className="flex items-center space-x-2 px-3 py-1.5 bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.08] rounded-[6px] text-white/70 hover:text-white transition-all duration-150 cursor-pointer"
-        >
-          <span className="text-xs font-semibold tracking-wide">SAIR</span>
-          <span className="bg-white/[0.08] text-white/90 text-[10px] font-mono px-1.5 py-0.5 rounded-[3px]">
-            ESC
-          </span>
-        </button>
-      </div>
+      <button
+        onClick={handleExit}
+        className="px-3 py-1.5 rounded-[6px] bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.08] hover:border-white/[0.15] text-white/60 hover:text-white text-xs font-semibold tracking-wider transition-all duration-140 flex items-center space-x-1.5 cursor-pointer"
+      >
+        <span>SAIR</span>
+        <span className="text-[10px] text-white/30 font-mono">[ESC]</span>
+      </button>
     </div>
   );
 };

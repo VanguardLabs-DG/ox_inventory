@@ -55,7 +55,7 @@ export const InventoryGrid: React.FC<InventoryGridProps> = ({ inventory, customT
 
   return (
     <div
-      className="w-full h-full flex flex-col justify-between bg-[rgba(10,14,22,0.45)] border border-white/[0.06] rounded-[8px] p-3 backdrop-blur-md shadow-2xl relative z-10 select-none"
+      className="w-full h-full flex flex-col justify-between bg-[rgba(10,14,22,0.45)] border border-white/[0.06] rounded-[8px] p-3 shadow-2xl relative z-10 select-none"
       style={{ pointerEvents: isBusy ? 'none' : 'auto' }}
     >
       {/* Top Header: Title & Weight */}
@@ -64,7 +64,7 @@ export const InventoryGrid: React.FC<InventoryGridProps> = ({ inventory, customT
           {inventoryTitle}
         </span>
 
-        {/* Weight info - Neutral White/Grey Bar */}
+        {/* Weight info - Neutral Bar */}
         <div className="flex items-center space-x-2">
           <span className="text-white/40 text-[10px] font-mono">
             {(currentWeight / 1000).toFixed(1)} / {(maxWeight / 1000).toFixed(0)} KG
@@ -99,7 +99,7 @@ export const InventoryGrid: React.FC<InventoryGridProps> = ({ inventory, customT
           ))}
         </div>
 
-        {/* Search input with soft borders */}
+        {/* Search input */}
         <input
           type="text"
           placeholder="Buscar..."

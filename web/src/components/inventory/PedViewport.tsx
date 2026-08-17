@@ -8,7 +8,7 @@ export const PedViewport: React.FC = () => {
   return (
     <div className="w-full h-full flex flex-col justify-between select-none relative z-10">
       {/* Top Bar */}
-      <div className="w-full h-9 flex items-center justify-between px-3 bg-[rgba(10,14,22,0.45)] border border-white/[0.08] rounded-[6px] backdrop-blur-md">
+      <div className="w-full h-9 flex items-center justify-between px-3 bg-[rgba(10,14,22,0.45)] border border-white/[0.06] rounded-[6px]">
         <span className="text-white text-xs font-semibold tracking-wider uppercase">
           PERSONAGEM
         </span>
@@ -17,11 +17,11 @@ export const PedViewport: React.FC = () => {
         </span>
       </div>
 
-      {/* Center 100% Transparent Framing Window for GTA V Cloned Ped */}
+      {/* Center 100% Transparent Framing Window */}
       <div className="w-full flex-1 relative pointer-events-none bg-transparent" />
 
       {/* Bottom Bar */}
-      <div className="w-full h-9 flex items-center justify-between px-3 bg-[rgba(10,14,22,0.45)] border border-white/[0.08] rounded-[6px] backdrop-blur-md">
+      <div className="w-full h-9 flex items-center justify-between px-3 bg-[rgba(10,14,22,0.45)] border border-white/[0.06] rounded-[6px]">
         <span className="text-white/40 text-[10px] tracking-wider uppercase">
           VISUALIZAÇÃO 3D
         </span>
