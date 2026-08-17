@@ -166,7 +166,7 @@ const ClothesSlot: React.FC<ClothesSlotProps> = ({ slotConfig, equippedItem, onT
       ref={drop}
       onDoubleClick={handleDoubleClick}
       className={`inventory-slot w-full aspect-square flex flex-col items-center justify-between p-1.5 ${
-        isOver ? 'border-[#FFC857] shadow-[0_0_12px_rgba(229,169,60,0.4)]' : ''
+        isOver ? 'border-[#FFC857] shadow-[0_0_12px_rgba(255,200,87,0.3)]' : ''
       }`}
       title={equippedItem ? `${equippedItem.metadata?.label || equippedItem.name} (Duplo clique para desequipar)` : slotConfig.label}
     >
@@ -179,19 +179,19 @@ const ClothesSlot: React.FC<ClothesSlotProps> = ({ slotConfig, equippedItem, onT
             alt={equippedItem.metadata?.label || slotConfig.label}
           />
         ) : (
-          <div className="text-white/40 group-hover:text-white/80 transition-colors flex items-center justify-center">
+          <div className="text-white/35 group-hover:text-white/80 transition-colors flex items-center justify-center">
             {slotConfig.svg}
           </div>
         )}
 
-        {/* Active Glow Dot */}
+        {/* Active Indicator Dot */}
         {equippedItem && (
           <div className="w-1.5 h-1.5 rounded-full absolute top-0 right-0 bg-[#FFC857] shadow-[0_0_6px_#FFC857]" />
         )}
       </div>
 
-      {/* Label matching item slots */}
-      <span className="inventory-slot-label-text text-[9px] font-cyber text-center leading-none mt-0.5">
+      {/* Label */}
+      <span className="inventory-slot-label-text text-[10px] text-center leading-none mt-0.5 text-white/70">
         {equippedItem ? equippedItem.metadata?.label || equippedItem.name : slotConfig.label}
       </span>
     </div>
@@ -216,19 +216,16 @@ export const ClothesColumn: React.FC = () => {
   };
 
   return (
-    <div className="w-full h-full flex flex-col justify-between bg-[rgba(8,10,14,0.45)] border border-[#E5A93C]/25 rounded-[2px] p-2.5 backdrop-blur-md shadow-2xl relative z-10 select-none">
-      {/* Header Bar matching standard inventory panel */}
-      <div className="flex items-center justify-between pb-2 mb-2 border-b border-[#E5A93C]/20">
-        <span className="text-[#FFC857] text-xs font-bold font-cyber tracking-wider uppercase">
-          // ROUPAS
-        </span>
-        <span className="text-white/40 text-[9px] font-mono">
-          VESTUÁRIO
+    <div className="w-full h-full flex flex-col justify-between bg-[rgba(10,14,22,0.45)] border border-white/[0.06] rounded-[8px] p-3 backdrop-blur-md shadow-2xl overflow-hidden select-none">
+      {/* Header */}
+      <div className="flex items-center justify-between pb-2 mb-2 border-b border-white/[0.06]">
+        <span className="text-white text-xs font-semibold tracking-wider uppercase">
+          EQUIPAMENTO
         </span>
       </div>
 
-      {/* 2-Column Grid with all 12 clothing slots filling the panel completely */}
-      <div className="w-full flex-1 grid grid-cols-2 gap-2 content-start overflow-y-auto pr-1">
+      {/* 2-Column Grid of 12 slots */}
+      <div className="w-full flex-1 grid grid-cols-2 gap-2 content-start overflow-y-auto pr-0.5">
         {CLOTHES_SLOTS.map((slotConfig) => (
           <ClothesSlot
             key={slotConfig.name}

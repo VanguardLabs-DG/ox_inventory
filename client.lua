@@ -273,13 +273,11 @@ local function CreatePedScreen()
         PlayerPedPreview = nil
     end
 
-    Wait(150)
     CreateThread(function()
         SetFrontendActive(true)
         local menuType = GetHashKey("FE_MENU_VERSION_EMPTY_NO_BACKGROUND")
         ActivateFrontendMenu(menuType, true, -1)
         ReplaceHudColourWithRgba(117, 0, 0, 0, 0)
-        Citizen.Wait(100)
         SetMouseCursorVisibleInMenus(false)
         if PlayerPedPreview == nil then
             local ped = PlayerPedId()
@@ -296,9 +294,10 @@ local function CreatePedScreen()
             GivePedToPauseMenu(PlayerPedPreview, 1)
             SetPauseMenuPedLighting(true)
         end
-        Citizen.CreateThread(function()
-            SetMouseCursorVisibleInMenus(false)
-        end)
+        Wait(50)
+        SetMouseCursorVisibleInMenus(false)
+        SetNuiFocus(true, true)
+        SetNuiFocusKeepInput(false)
         isPedScreenActive = false
     end)
 end
@@ -1770,10 +1769,31 @@ local function isGiveTargetValid(ped, coords)
     return entity == ped and IsEntityVisible(ped)
 end
 
+RegisterNUICallback('getNearbyPlayers', function(data, cb)
+    local nearbyPlayers = lib.getNearbyPlayers(GetEntityCoords(playerPed), 3.0)
+    local list = {}
+    for i = 1, #nearbyPlayers do
+        local option = nearbyPlayers[i]
+        if isGiveTargetValid(option.ped, option.coords) then
+            local serverId = GetPlayerServerId(option.id)
+            local playerName = GetPlayerName(option.id)
+            table.insert(list, {
+                id = serverId,
+                name = ('[%s] %s'):format(serverId, playerName)
+            })
+        end
+    end
+    cb(list)
+end)
+
 RegisterNUICallback('giveItem', function(data, cb)
 	cb(1)
 
     if usingItem then return end
+
+    if data.target then
+        return giveItemToTarget(tonumber(data.target), data.slot, data.count)
+    end
 
 	if client.giveplayerlist then
 		local nearbyPlayers = lib.getNearbyPlayers(GetEntityCoords(playerPed), 3.0)

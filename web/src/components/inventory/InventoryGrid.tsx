@@ -6,16 +6,17 @@ import { Inventory } from '../../typings';
 interface InventoryGridProps {
   inventory: Inventory;
   isRight?: boolean;
+  customTitle?: string;
 }
 
 const FILTER_TABS = [
-  { id: 'all', label: '◈ TODOS' },
-  { id: 'weapons', label: '◈ ARMAS' },
-  { id: 'clothes', label: '◈ ROUPAS' },
-  { id: 'use', label: '◈ USÁVEIS' },
+  { id: 'all', label: 'TODOS' },
+  { id: 'weapons', label: 'ARMAS' },
+  { id: 'clothes', label: 'ROUPAS' },
+  { id: 'use', label: 'USÁVEIS' },
 ];
 
-export const InventoryGrid: React.FC<InventoryGridProps> = ({ inventory }) => {
+export const InventoryGrid: React.FC<InventoryGridProps> = ({ inventory, customTitle }) => {
   const [activeFilter, setActiveFilter] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
   const isBusy = useAppSelector((state) => state.inventory.isBusy);
@@ -48,28 +49,49 @@ export const InventoryGrid: React.FC<InventoryGridProps> = ({ inventory }) => {
     return slotList;
   }, [rawItems, totalSlots, startSlot, searchQuery]);
 
-  const inventoryTitle = inventory.label || (inventory.type === 'player' ? 'MOCHILA' : 'CHÃO / SECUNDÁRIO');
+  const inventoryTitle = customTitle || (inventory.type === 'player'
+    ? 'BOLSOS'
+    : (inventory.label || 'CHÃO').toUpperCase());
 
   return (
     <div
-      className="w-full h-full flex flex-col justify-between bg-[rgba(8,10,14,0.45)] border border-[#E5A93C]/25 rounded-[2px] p-2.5 backdrop-blur-md shadow-2xl relative z-10 select-none"
+      className="w-full h-full flex flex-col justify-between bg-[rgba(10,14,22,0.45)] border border-white/[0.06] rounded-[8px] p-3 backdrop-blur-md shadow-2xl relative z-10 select-none"
       style={{ pointerEvents: isBusy ? 'none' : 'auto' }}
     >
-      {/* Top Bar: Title, Filters, Search & Weight */}
-      <div className="flex items-center justify-between pb-2 mb-2 border-b border-[#E5A93C]/20">
-        {/* Title / Filters */}
+      {/* Top Header: Title & Weight */}
+      <div className="flex items-center justify-between pb-2 mb-2 border-b border-white/[0.06]">
+        <span className="text-white text-xs font-semibold tracking-wider uppercase">
+          {inventoryTitle}
+        </span>
+
+        {/* Weight info - Neutral White/Grey Bar */}
         <div className="flex items-center space-x-2">
-          <span className="text-[#FFC857] text-xs font-bold font-cyber tracking-wider uppercase mr-2">
-            // {inventoryTitle}
+          <span className="text-white/40 text-[10px] font-mono">
+            {(currentWeight / 1000).toFixed(1)} / {(maxWeight / 1000).toFixed(0)} KG
           </span>
+          <div className="w-14 h-1.5 bg-black/40 rounded-full overflow-hidden border border-white/10">
+            <div
+              className={`h-full transition-all duration-200 ${
+                weightPercent >= 90 ? 'bg-red-500' : 'bg-white/50'
+              }`}
+              style={{ width: `${weightPercent}%` }}
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* Sub-header: Filters & Search */}
+      <div className="flex items-center justify-between pb-2.5 mb-2 gap-2">
+        {/* Filter Pills */}
+        <div className="flex items-center space-x-1.5">
           {FILTER_TABS.map((tab) => (
             <button
               key={tab.id}
               onClick={() => setActiveFilter(tab.id)}
-              className={`px-2 py-0.5 rounded-[2px] text-[10px] font-cyber font-bold tracking-wider transition-all duration-150 cursor-pointer ${
+              className={`px-2.5 py-1 rounded-[5px] text-[10px] font-semibold tracking-wider transition-all duration-140 cursor-pointer ${
                 activeFilter === tab.id
-                  ? 'bg-[#FFC857]/20 border border-[#FFC857] text-[#FFC857] shadow-[0_0_8px_rgba(255,200,87,0.3)]'
-                  : 'text-white/40 hover:text-white/80 border border-transparent'
+                  ? 'bg-[#E5A93C]/20 border border-[#E5A93C]/40 text-[#FFC857]'
+                  : 'text-white/40 hover:text-white/80 bg-white/[0.03] hover:bg-white/[0.06] border border-transparent'
               }`}
             >
               {tab.label}
@@ -77,33 +99,17 @@ export const InventoryGrid: React.FC<InventoryGridProps> = ({ inventory }) => {
           ))}
         </div>
 
-        {/* Search & Weight */}
-        <div className="flex items-center space-x-3">
-          <input
-            type="text"
-            placeholder="BUSCAR..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-24 bg-black/40 border border-white/10 px-2 py-0.5 text-white text-[10px] font-cyber focus:border-[#FFC857] outline-none rounded-[2px]"
-          />
-
-          <div className="flex items-center space-x-1.5">
-            <span className="text-white/50 text-[9px] font-mono">
-              {(currentWeight / 1000).toFixed(1)}/{(maxWeight / 1000).toFixed(0)}KG
-            </span>
-            <div className="w-14 h-1.5 bg-black/60 rounded-full overflow-hidden border border-white/10">
-              <div
-                className={`h-full transition-all duration-200 ${
-                  weightPercent >= 90 ? 'bg-red-500' : 'bg-[#FFC857]'
-                }`}
-                style={{ width: `${weightPercent}%` }}
-              />
-            </div>
-          </div>
-        </div>
+        {/* Search input with soft borders */}
+        <input
+          type="text"
+          placeholder="Buscar..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="w-28 bg-black/30 border border-white/[0.08] px-2.5 py-1 text-white text-[11px] placeholder:text-white/30 focus:border-[#E5A93C]/40 focus:bg-black/50 outline-none rounded-[5px] transition-all"
+        />
       </div>
 
-      {/* Cyberpunk Matrix Slots Grid */}
+      {/* Slots Grid */}
       <div className="inventory-grid-container flex-1 overflow-y-auto pr-1">
         {slots.map((itemSlot) => (
           <InventorySlot

@@ -1,5 +1,4 @@
 import React from 'react';
-import { useAppSelector } from '../../store';
 import InventorySlot from './InventorySlot';
 import { Inventory } from '../../typings';
 
@@ -16,21 +15,22 @@ export const HotbarDeck: React.FC<HotbarDeckProps> = ({ inventory }) => {
   });
 
   return (
-    <div className="w-full flex flex-col mb-2 select-none">
-      <div className="flex items-center justify-between mb-1 px-1">
-        <span className="text-[#FFC857] text-[11px] font-cyber font-bold tracking-widest uppercase">
-          // ATALHOS RÁPIDOS [ 1 - 5 ]
+    <div className="w-full flex flex-col mb-3 select-none">
+      <div className="flex items-center justify-between mb-1.5 px-0.5">
+        <span className="text-white text-xs font-semibold tracking-wider uppercase">
+          ATALHOS RÁPIDOS
         </span>
       </div>
 
       {/* 5 Quick Slots Grid */}
-      <div className="w-full grid grid-cols-5 gap-2 bg-[rgba(8,10,14,0.45)] border border-[#E5A93C]/25 rounded-[2px] p-1.5 backdrop-blur-md">
+      <div className="w-full grid grid-cols-5 gap-2 bg-[rgba(10,14,22,0.45)] border border-white/[0.06] rounded-[8px] p-2.5 backdrop-blur-md shadow-2xl">
         {hotbarSlots.map((itemSlot) => (
           <div key={`hotbar-deck-slot-${itemSlot.slot}`} className="relative">
             <InventorySlot
               item={itemSlot}
               inventoryType={inventory.type}
               inventoryGroups={inventory.groups}
+              hotbarNumber={itemSlot.slot}
             />
           </div>
         ))}
