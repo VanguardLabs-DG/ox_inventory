@@ -23,7 +23,7 @@ export const PlayerStatsCard: React.FC = () => {
   });
 
   return (
-    <div className="w-full bg-[rgba(10,14,22,0.45)] border border-white/[0.06] rounded-[8px] p-3 backdrop-blur-md shadow-2xl flex flex-col select-none">
+    <div className="w-full bg-[rgba(10,14,22,0.45)] border border-white/[0.06] rounded-[8px] p-3 shadow-2xl flex flex-col select-none">
       {/* Header */}
       <div className="flex items-center justify-between pb-1.5 mb-2 border-b border-white/[0.06]">
         <span className="text-white text-[11px] font-semibold tracking-wider uppercase">
@@ -63,7 +63,7 @@ export const PlayerStatsCard: React.FC = () => {
         <div className="flex items-center space-x-2.5 bg-[rgba(16,20,30,0.42)] border border-amber-500/15 rounded-[6px] p-2">
           <div className="w-6 h-6 rounded-[4px] bg-amber-500/10 border border-amber-500/25 flex items-center justify-center text-amber-400">
             <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M18.06 22.99h1.66c.84 0 1.53-.64 1.63-1.48L23 5.05h-5V1h-1.97v4.05h-4.97l.3 2.34c1.71.47 3.31 1.32 4.27 2.26 1.44 1.42 2.43 2.89 2.43 5.29v8.05zM1 21.99V21h15.03v1c0 .55-.45.99-1.01.99H2.01c-.56 0-1.01-.44-1.01-1zm15.03-7c0-8-15.03-8-15.03 0h15.03zM1.02 17h15v2h-15z" />
+              <path d="M18.06 22.99h1.66c.84 0 1.53-.64 1.63-1.48L23 5.05h-5V1h-1.97v4.05h-4.97l.3 2.34c1.71.47 3.31 1.32 4.27 2.26 1.44 1.42 2.43 2.89 2.43 5.29v8.05zM1 21.99V21h15.03v.99c0 .55-.45 1-1 1H2c-.55 0-1-.45-1-1zm15.03-7c0-8-15.03-8-15.03 0h15.03zM1.02 17h15v2h-15z" />
             </svg>
           </div>
           <div className="flex flex-col">

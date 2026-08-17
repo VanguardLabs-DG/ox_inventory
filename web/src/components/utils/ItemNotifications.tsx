@@ -39,7 +39,7 @@ const ItemNotification = React.forwardRef(
       >
         <div className="item-slot-wrapper">
           <div className="item-notification-action-box">
-            <p className='text-gray-100'>{props.item.text}</p>
+            <p className="text-gray-100">{props.item.text}</p>
           </div>
           <div className="inventory-slot-label-box">
             <div className="inventory-slot-label-text">{slotItem.metadata?.label || Items[slotItem.name]?.label}</div>
@@ -76,16 +76,19 @@ export const ItemNotificationsProvider = ({ children }: { children: React.ReactN
   return (
     <ItemNotificationsContext.Provider value={{ add }}>
       {children}
-      {createPortal(
-        <TransitionGroup className="item-notification-container">
-          {queue.values.map((notification, index) => (
-            <Fade key={`item-notification-${index}`}>
-              <ItemNotification item={notification.item} ref={notification.ref} />
-            </Fade>
-          ))}
-        </TransitionGroup>,
-        document.body
-      )}
+      {queue.values.length > 0 &&
+        createPortal(
+          <TransitionGroup className="item-notification-container">
+            {queue.values.map((notification, index) => (
+              <Fade key={`item-notification-${index}`}>
+                <ItemNotification item={notification.item} ref={notification.ref} />
+              </Fade>
+            ))}
+          </TransitionGroup>,
+          document.body
+        )}
     </ItemNotificationsContext.Provider>
   );
 };
+
+export default ItemNotificationsProvider;

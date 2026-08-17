@@ -59,7 +59,7 @@ const CLOTHES_SLOTS: ClothesSlotConfig[] = [
     itemname: 'tshirt_1',
     svg: (
       <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-        <path d="M15 2l-3 2-3-2-5 3v5h3v12h12V10h3V5l-5-3zm-1 8h-4V6h4v4z" />
+        <path d="M12 2L4 5v4h3v13h10V9h3V5l-8-3zm0 2.5l4 1.5h-8l4-1.5z" />
       </svg>
     ),
   },
@@ -69,7 +69,7 @@ const CLOTHES_SLOTS: ClothesSlotConfig[] = [
     itemname: 'bproof_1',
     svg: (
       <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-        <path d="M12 2L4 5v6.09c0 5.05 3.41 9.76 8 10.91 4.59-1.15 8-5.86 8-10.91V5l-8-3zm0 4c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2z" />
+        <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z" />
       </svg>
     ),
   },
@@ -86,10 +86,10 @@ const CLOTHES_SLOTS: ClothesSlotConfig[] = [
   {
     name: 'gloves',
     label: 'Luvas',
-    itemname: 'arms',
+    itemname: 'arms_1',
     svg: (
       <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-        <path d="M19 5h-2V3a1 1 0 0 0-1-1h-2a1 1 0 0 0-1 1v2h-2V2a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v3H5a1 1 0 0 0-1 1v14a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V6a1 1 0 0 0-1-1z" />
+        <path d="M19 13V6c0-1.1-.9-2-2-2s-2 .9-2 2v5h-1V3c0-1.1-.9-2-2-2s-2 .9-2 2v8h-1V1.5c0-1.1-.9-2-2-2s-2 .9-2 2V12h-1V4.5c0-1.1-.9-2-2-2s-2 .9-2 2V16c0 4.42 3.58 8 8 8s8-3.58 8-8v-3h-1z" />
       </svg>
     ),
   },
@@ -99,7 +99,7 @@ const CLOTHES_SLOTS: ClothesSlotConfig[] = [
     itemname: 'chain_1',
     svg: (
       <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-        <path d="M12 2C8.13 2 5 5.13 5 9c0 2.38 1.19 4.47 3 5.74V21l4-2 4 2v-6.26c1.81-1.27 3-3.36 3-5.74 0-3.87-3.13-7-7-7zm0 2c2.76 0 5 2.24 5 5s-2.24 5-5 5-5-2.24-5-5 2.24-5 5-5z" />
+        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-13c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5z" />
       </svg>
     ),
   },
@@ -109,17 +109,17 @@ const CLOTHES_SLOTS: ClothesSlotConfig[] = [
     itemname: 'watches_1',
     svg: (
       <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-        <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67V7z" />
+        <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm4.2 14.2L11 13V7h1.5v5.2l4.5 2.7-.8 1.3z" />
       </svg>
     ),
   },
   {
-    name: 'pant',
+    name: 'pants',
     label: 'Calça',
     itemname: 'pants_1',
     svg: (
       <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-        <path d="M6 2h12v5l-2 15h-3l-1-10-1 10H8L6 7V2z" />
+        <path d="M18 2H6c-.55 0-1 .45-1 1v19h5v-9h4v9h5V3c0-.55-.45-1-1-1z" />
       </svg>
     ),
   },
@@ -129,7 +129,7 @@ const CLOTHES_SLOTS: ClothesSlotConfig[] = [
     itemname: 'shoes_1',
     svg: (
       <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-        <path d="M2 18h20v3H2v-3zm19.5-6.5L19 9h-5l-2 3H7c-1.66 0-3 1.34-3 3v1h18v-2.5c0-.75-.34-1.46-.86-1.92l.36-.08z" />
+        <path d="M19 13h-4V7H9v6H5c-1.1 0-2 .9-2 2v4c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-4c0-1.1-.9-2-2-2z" />
       </svg>
     ),
   },
@@ -216,7 +216,7 @@ export const ClothesColumn: React.FC = () => {
   };
 
   return (
-    <div className="w-full h-full flex flex-col justify-between bg-[rgba(10,14,22,0.45)] border border-white/[0.06] rounded-[8px] p-3 backdrop-blur-md shadow-2xl overflow-hidden select-none">
+    <div className="w-full h-full flex flex-col justify-between bg-[rgba(10,14,22,0.45)] border border-white/[0.06] rounded-[8px] p-3 shadow-2xl overflow-hidden select-none">
       {/* Header */}
       <div className="flex items-center justify-between pb-2 mb-2 border-b border-white/[0.06]">
         <span className="text-white text-xs font-semibold tracking-wider uppercase">
