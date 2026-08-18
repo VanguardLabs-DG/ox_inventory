@@ -58,28 +58,28 @@ const Inventory: React.FC = () => {
             onTabChange={setActiveTab}
           />
 
-          {/* Main 4-Column Layout */}
-          <div className="flex-1 w-full grid grid-cols-[22%_16%_30%_30%] gap-3.5 px-6 py-2 relative overflow-hidden">
-            {/* Coluna 1: Personagem 3D */}
-            <div className="w-full h-full flex flex-col overflow-hidden">
-              <PedViewport />
-            </div>
-
-            {/* Coluna 2: Equipamento (Topo) + Status (Base) */}
-            <div className="w-full h-full flex flex-col justify-between overflow-hidden gap-3">
+          {/* Main 4-Column Responsive Layout (Zero overflow across all resolutions) */}
+          <div className="flex-1 w-full grid grid-cols-[minmax(0,1.35fr)_minmax(0,2.1fr)_minmax(0,3.15fr)_minmax(0,3.15fr)] gap-3.5 px-6 py-2 relative overflow-hidden box-border">
+            {/* Coluna 1: Equipamento (Topo) + Status (Base) */}
+            <div className="w-full h-full min-w-0 flex flex-col justify-between overflow-hidden gap-3">
               <div className="flex-1 w-full overflow-hidden">
                 <ClothesColumn />
               </div>
               <PlayerStatsCard />
             </div>
 
+            {/* Coluna 2: Personagem 3D (Encaixe milimétrico do Slot 0 em x=26%) */}
+            <div className="w-full h-full min-w-0 flex flex-col overflow-hidden">
+              <PedViewport />
+            </div>
+
             {/* Coluna 3: Hotbar (1-5) + Bolsos (6+) */}
-            <div className="w-full h-full flex flex-col overflow-hidden">
+            <div className="w-full h-full min-w-0 flex flex-col overflow-hidden">
               <LeftInventory />
             </div>
 
             {/* Coluna 4: Toggles [CHÃO] [MOCHILA] + Grade */}
-            <div className="w-full h-full flex flex-col overflow-hidden">
+            <div className="w-full h-full min-w-0 flex flex-col overflow-hidden">
               <RightInventory />
             </div>
 

@@ -43,12 +43,15 @@ plyState:set('invBusy', true, true)
 plyState:set('invHotkeys', false, false)
 plyState:set('canUseWeapons', false, false)
 
+local isPedScreenActive = false
+local PlayerPedPreview = nil
+
 local function canOpenInventory()
     if not PlayerData.loaded then
         return shared.info('cannot open inventory', '(player inventory has not loaded)')
     end
 
-    if IsPauseMenuActive() then return end
+    if IsPauseMenuActive() and not invOpen and not PlayerPedPreview then return end
 
     if invBusy or invOpen == nil or (currentWeapon?.timer or 0) > 0 then
         return shared.info('cannot open inventory', '(is busy)')
@@ -107,6 +110,58 @@ local function closeTrunk()
 			end
 		end)
 	end
+end
+
+local function CreatePedScreen()
+    if isPedScreenActive then return end
+    isPedScreenActive = true
+    if PlayerPedPreview then
+        DeleteEntity(PlayerPedPreview)
+        PlayerPedPreview = nil
+    end
+
+    CreateThread(function()
+        SetFrontendActive(true)
+        ActivateFrontendMenu(GetHashKey("FE_MENU_VERSION_EMPTY_NO_BACKGROUND"), true, -1)
+        ReplaceHudColourWithRgba(117, 0, 0, 0, 0)
+        Wait(50)
+        SetMouseCursorVisibleInMenus(false)
+        if PlayerPedPreview == nil then
+            local ped = PlayerPedId()
+            local coords = GetEntityCoords(ped)
+            PlayerPedPreview = ClonePed(ped, false, false, true)
+            FreezeEntityPosition(PlayerPedPreview, true)
+            SetEntityCoords(PlayerPedPreview, coords.x, coords.y, coords.z - 10.0)
+            SetPauseMenuPedSleepState(true)
+            FinalizeHeadBlend(PlayerPedPreview)
+            FreezeEntityPosition(PlayerPedPreview, true)
+            SetEntityVisible(PlayerPedPreview, false, 0)
+            NetworkSetEntityInvisibleToNetwork(PlayerPedPreview, false)
+
+            GivePedToPauseMenu(PlayerPedPreview, 0)
+            SetPauseMenuPedLighting(true)
+        end
+        SetMouseCursorVisibleInMenus(false)
+        SetNuiFocus(true, true)
+        SetNuiFocusKeepInput(false)
+
+        while invOpen do
+            Wait(0)
+            SetPauseMenuPedLighting(true)
+            SetMouseCursorVisibleInMenus(false)
+        end
+        isPedScreenActive = false
+    end)
+end
+
+local function Remove2d()
+    if PlayerPedPreview then
+        DeleteEntity(PlayerPedPreview)
+        PlayerPedPreview = nil
+    end
+    SetFrontendActive(false)
+    ReplaceHudColourWithRgba(117, 45, 44, 44, 200)
+    isPedScreenActive = false
 end
 
 local CraftingBenches = require 'modules.crafting.client'
@@ -268,6 +323,7 @@ function client.openInventory(inv, data)
     SetNuiFocus(true, true)
     SetNuiFocusKeepInput(false)
     closeTrunk()
+    CreatePedScreen()
 
     if client.screenblur then Utils.blurIn() end
 
@@ -760,11 +816,16 @@ local function registerCommands()
 		end
 	end
 
+	local lastOpenToggle = 0
 	local primary = lib.addKeybind({
 		name = 'mriQ_inv',
 		description = locale('open_player_inventory'),
 		defaultKey = client.keys[1],
 		onPressed = function()
+			local now = GetGameTimer()
+			if now - lastOpenToggle < 400 then return end
+			lastOpenToggle = now
+
 			if invOpen then
 				return client.closeInventory()
 			end
@@ -795,6 +856,10 @@ local function registerCommands()
             if primary:getCurrentKey() == self:getCurrentKey() then
                 return warn(("secondary inventory keybind '%s' disabled (keybind cannot match primary inventory keybind)"):format(self:getCurrentKey()))
             end
+
+			local now = GetGameTimer()
+			if now - lastOpenToggle < 400 then return end
+			lastOpenToggle = now
 
 			if invOpen then
 				return client.closeInventory()
@@ -887,6 +952,7 @@ function client.closeInventory(server)
 		SetNuiFocusKeepInput(false)
 		Utils.blurOut()
 		closeTrunk()
+		Remove2d()
 		SendNUIMessage({ action = 'closeInventory' })
 		SetInterval(client.interval, 200)
 		Wait(200)
