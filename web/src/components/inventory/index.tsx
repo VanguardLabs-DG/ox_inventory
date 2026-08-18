@@ -58,9 +58,9 @@ const Inventory: React.FC = () => {
             onTabChange={setActiveTab}
           />
 
-          {/* Main 4-Column Responsive Layout (Zero overflow across all resolutions) */}
-          <div className="flex-1 w-full grid grid-cols-[minmax(0,1.35fr)_minmax(0,2.1fr)_minmax(0,3.15fr)_minmax(0,3.15fr)] gap-3.5 px-6 py-2 relative overflow-hidden box-border">
-            {/* Coluna 1: Equipamento (Topo) + Status (Base) */}
+          {/* Main 4-Column Responsive Layout */}
+          <div className="flex-1 w-full grid grid-cols-[minmax(0,1.8fr)_minmax(0,1.65fr)_minmax(0,3.15fr)_minmax(0,3.15fr)] gap-3.5 px-6 py-2 relative overflow-hidden box-border">
+            {/* Coluna 1: Equipamento (Topo) + Status (Base) - Ampliada e Confortável */}
             <div className="w-full h-full min-w-0 flex flex-col justify-between overflow-hidden gap-3">
               <div className="flex-1 w-full overflow-hidden">
                 <ClothesColumn />
@@ -68,7 +68,7 @@ const Inventory: React.FC = () => {
               <PlayerStatsCard />
             </div>
 
-            {/* Coluna 2: Personagem 3D (Encaixe milimétrico do Slot 0 em x=26%) */}
+            {/* Coluna 2: Personagem 3D - Enquadramento Preciso do Ped sem sobra */}
             <div className="w-full h-full min-w-0 flex flex-col overflow-hidden">
               <PedViewport />
             </div>
