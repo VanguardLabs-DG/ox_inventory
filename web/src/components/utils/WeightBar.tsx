@@ -1,33 +1,30 @@
 import React from 'react';
 
-const getColor = (percent: number, durability?: boolean): string => {
-  if (durability) {
-    if (percent > 60) return 'bg-green-400';
-    if (percent > 40) return 'bg-yellow-400';
-    if (percent > 20) return 'bg-orange-400';
-    return 'bg-red-400';
-  } else {
-    if (percent > 75) return 'bg-red-400';
-    if (percent > 50) return 'bg-orange-400';
-    if (percent > 25) return 'bg-yellow-400';
-    return 'bg-green-400';
-  }
+const getDurabilityColor = (percent: number): string => {
+  if (percent >= 50) return 'bg-white/80';
+  if (percent >= 25) return 'bg-[#FFC857]';
+  return 'bg-red-500';
+};
+
+const getWeightColor = (percent: number): string => {
+  if (percent >= 90) return 'bg-red-500';
+  if (percent >= 80) return 'bg-[#FFC857]';
+  return 'bg-white/60';
 };
 
 const WeightBar: React.FC<{ percent: number; durability?: boolean }> = ({ percent, durability }) => {
-  const color = React.useMemo(() => getColor(percent, durability), [percent, durability]);
+  const color = React.useMemo(() => {
+    return durability ? getDurabilityColor(percent) : getWeightColor(percent);
+  }, [percent, durability]);
 
   return (
-    <div className={`rounded-md mt-0.5 ${durability ? 'durability-bar' : 'weight-bar'}`}>
+    <div className={`w-full overflow-hidden ${durability ? 'h-[2px] bg-black/50 rounded-full' : 'h-1.5 bg-black/40 rounded-full border border-white/10'}`}>
       <div
-        className={`rounded-md ${color}`}
+        className={`h-full rounded-full transition-all duration-300 ${color}`}
         style={{
-          visibility: percent > 0 ? 'visible' : 'hidden',
-          height: '100%',
-          width: `${percent}%`,
-          transition: `background ${0.3}s ease, width ${0.3}s ease`,
+          width: `${Math.min(Math.max(percent, 0), 100)}%`,
         }}
-      ></div>
+      />
     </div>
   );
 };

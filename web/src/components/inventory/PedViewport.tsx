@@ -7,8 +7,8 @@ export const PedViewport: React.FC = () => {
 
   return (
     <div className="w-full h-full flex flex-col justify-between select-none relative z-10">
-      {/* Top Bar */}
-      <div className="w-full h-9 flex items-center justify-between px-3 bg-[rgba(10,14,22,0.45)] border border-white/[0.06] rounded-[6px]">
+      {/* Top Bar Header */}
+      <div className="w-full h-9 flex items-center justify-between px-3 bg-[rgba(13,17,26,0.65)] border border-white/[0.06] rounded-[6px] shadow-lg">
         <span className="text-white text-xs font-semibold tracking-wider uppercase">
           PERSONAGEM
         </span>
@@ -17,11 +17,21 @@ export const PedViewport: React.FC = () => {
         </span>
       </div>
 
-      {/* Center 100% Transparent Framing Window */}
-      <div className="w-full flex-1 relative pointer-events-none bg-transparent" />
+      {/* Center 100% Transparent Framing Window with Ground Contact Shadow */}
+      <div className="w-full flex-1 relative pointer-events-none">
+        {/* Dark Elliptical Contact Shadow positioned right under the Ped's footwear */}
+        <div
+          className="w-32 h-6 rounded-[50%] pointer-events-none absolute left-1/2 -translate-x-1/2"
+          style={{
+            bottom: '16.5%',
+            background: 'radial-gradient(ellipse at center, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.4) 45%, transparent 75%)',
+            filter: 'blur(2px)',
+          }}
+        />
+      </div>
 
-      {/* Bottom Bar */}
-      <div className="w-full h-9 flex items-center justify-between px-3 bg-[rgba(10,14,22,0.45)] border border-white/[0.06] rounded-[6px]">
+      {/* Bottom Bar Footer */}
+      <div className="w-full h-9 flex items-center justify-between px-3 bg-[rgba(13,17,26,0.65)] border border-white/[0.06] rounded-[6px] shadow-lg">
         <span className="text-white/40 text-[10px] tracking-wider uppercase">
           VISUALIZAÇÃO 3D
         </span>

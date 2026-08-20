@@ -3003,4 +3003,712 @@ return {
             image = "recyclablematerial.png",
         }
     },
+
+    -- ========================================================================
+    -- NANO SPY SYSTEM ITEMS
+    -- ========================================================================
+    ['nanospytablet'] = {
+        label = 'Spy Tablet',
+        weight = 500,
+        stack = false,
+        close = true,
+        description = 'Tablet avançado de controle para câmeras, escutas e rastreadores GPS.',
+        client = {
+            image = 'nanospytablet.png',
+        }
+    },
+
+    ['nanospycam'] = {
+        label = 'Câmera Espiã',
+        weight = 200,
+        stack = true,
+        close = true,
+        description = 'Micro câmera sem fio com visão noturna instalável em superfícies.',
+        client = {
+            image = 'nanospycam.png',
+        }
+    },
+
+    ['nanospymic'] = {
+        label = 'Escuta Espiã',
+        weight = 100,
+        stack = true,
+        close = true,
+        description = 'Microfone de escuta secreto com transmissão de áudio em tempo real.',
+        client = {
+            image = 'nanospymic.png',
+        }
+    },
+
+    ['nanospygps'] = {
+        label = 'Rastreador GPS',
+        weight = 250,
+        stack = true,
+        close = true,
+        description = 'Rastreador veicular com monitoramento de velocidade e corte de ignição.',
+        client = {
+            image = 'nanospygps.png',
+        }
+    },
+
+    ['digiscanner'] = {
+        label = 'Digi Scanner',
+        weight = 750,
+        stack = false,
+        close = true,
+        description = 'Scanner de alta sensibilidade para detecção de câmeras, escutas e GPS.',
+        client = {
+            image = 'digiscanner.png',
+        }
+    },
+
+    -- ========================================================================
+    -- LATION CHOPSHOP ITEMS
+    -- ========================================================================
+    ['ls_auto_parts'] = {
+        label = 'Peças de Carro',
+        weight = 50,
+        stack = true,
+        close = false,
+        description = 'Peças e sucatas automotivas obtidas no desmanche de veículos.',
+        client = {
+            image = 'ls_auto_parts.png',
+        }
+    },
+
+    ['ls_torch'] = {
+        label = 'Maçarico de Corte',
+        weight = 275,
+        stack = false,
+        close = true,
+        description = 'Maçarico industrial utilizado para cortar chapas de portas e chassis.',
+        client = {
+            image = 'ls_torch.png',
+        }
+    },
+
+    ['ls_lug_wrench'] = {
+        label = 'Chave de Roda',
+        weight = 225,
+        stack = false,
+        close = true,
+        description = 'Chave de cruz reforçada para remoção de rodas e parafusos de roda.',
+        client = {
+            image = 'ls_lug_wrench.png',
+        }
+    },
+
+    ['ls_vehicle_finder'] = {
+        label = 'Localizador Veicular',
+        weight = 175,
+        stack = false,
+        close = true,
+        description = 'Dispositivo hacker de sinal para triangulação de veículos procurados.',
+        client = {
+            image = 'ls_vehicle_finder.png',
+        }
+    },
+
+    -- ========================================================================
+    -- NANO MECHANIC UNIVERSAL & SERVICE ITEMS
+    -- ========================================================================
+    ['mechanic_oil'] = {
+        label = 'Óleo de Motor Sintético',
+        weight = 1000,
+        stack = true,
+        close = true,
+        description = 'Galão de óleo de alta performance para motores.',
+    },
+
+    ['mechanic_brake_pad'] = {
+        label = 'Pastilhas de Freio Cerâmica',
+        weight = 800,
+        stack = true,
+        close = true,
+        description = 'Conjunto de pastilhas de freio para reposição.',
+    },
+
+    ['mechanic_tire'] = {
+        label = 'Pneu Reserva',
+        weight = 2500,
+        stack = true,
+        close = true,
+        description = 'Pneu novo para substituição em rodas danificadas.',
+    },
+
+    ['mechanic_nitrous'] = {
+        label = 'Garrafa de Nitro N2O',
+        weight = 3000,
+        stack = true,
+        close = true,
+        description = 'Cilindro de óxido nitroso pressurizado para boost veicular.',
+    },
+
+    ['mechanic_spoiler'] = {
+        label = 'Aerofólio Universal',
+        weight = 1500,
+        stack = true,
+        close = true,
+        description = 'Peça de customização mecânica para aerofólio.',
+    },
+
+    ['mechanic_front_bumper'] = {
+        label = 'Para-choque Dianteiro Universal',
+        weight = 2000,
+        stack = true,
+        close = true,
+        description = 'Peça de customização para para-choque dianteiro.',
+    },
+
+    ['mechanic_rear_bumper'] = {
+        label = 'Para-choque Traseiro Universal',
+        weight = 2000,
+        stack = true,
+        close = true,
+        description = 'Peça de customização para para-choque traseiro.',
+    },
+
+    ['mechanic_side_skirt'] = {
+        label = 'Saia Lateral Universal',
+        weight = 1500,
+        stack = true,
+        close = true,
+        description = 'Peça de customização de saia lateral.',
+    },
+
+    ['mechanic_exhaust'] = {
+        label = 'Escapamento Universal',
+        weight = 2000,
+        stack = true,
+        close = true,
+        description = 'Ponteira e linha de escapamento customizada.',
+    },
+
+    ['mechanic_roll_cage'] = {
+        label = 'Roll Cage Universal',
+        weight = 3500,
+        stack = true,
+        close = true,
+        description = 'Gaiola de proteção interna para veículos esportivos.',
+    },
+
+    ['mechanic_grille'] = {
+        label = 'Grade Dianteira Universal',
+        weight = 1200,
+        stack = true,
+        close = true,
+        description = 'Grade frontal customizada.',
+    },
+
+    ['mechanic_hood'] = {
+        label = 'Capô Esportivo Universal',
+        weight = 2500,
+        stack = true,
+        close = true,
+        description = 'Capô com entradas de ar customizado.',
+    },
+
+    ['mechanic_fender'] = {
+        label = 'Para-lama Universal',
+        weight = 1800,
+        stack = true,
+        close = true,
+        description = 'Para-lamas alargados para veículos.',
+    },
+
+    ['mechanic_roof'] = {
+        label = 'Teto Customizado Universal',
+        weight = 1500,
+        stack = true,
+        close = true,
+        description = 'Aplique e acabamento de teto.',
+    },
+
+    ['mechanic_engine'] = {
+        label = 'Kit de Motor Performance',
+        weight = 10000,
+        stack = false,
+        close = true,
+        description = 'Bloco e upgrade completo de motor.',
+    },
+
+    ['mechanic_brakes'] = {
+        label = 'Kit de Freios de Alta Performance',
+        weight = 2500,
+        stack = true,
+        close = true,
+        description = 'Discos ventilados e pinças esportivas.',
+    },
+
+    ['mechanic_transmission'] = {
+        label = 'Transmissão Esportiva Universal',
+        weight = 4000,
+        stack = false,
+        close = true,
+        description = 'Câmbio manual/sequencial reforçado.',
+    },
+
+    ['mechanic_horn'] = {
+        label = 'Buzina Customizada',
+        weight = 500,
+        stack = true,
+        close = true,
+        description = 'Módulo de buzinas variadas.',
+    },
+
+    ['mechanic_suspension'] = {
+        label = 'Kit de Suspensão Ajustável',
+        weight = 3000,
+        stack = true,
+        close = true,
+        description = 'Coilovers e amortecedores esportivos.',
+    },
+
+    ['mechanic_armor'] = {
+        label = 'Blindagem Veicular',
+        weight = 8000,
+        stack = false,
+        close = true,
+        description = 'Placas de reforço balístico para chassis e portas.',
+    },
+
+    ['mechanic_turbo'] = {
+        label = 'Kit Turbo Compresso',
+        weight = 3500,
+        stack = true,
+        close = true,
+        description = 'Turbina roletada para ganho de potência.',
+    },
+
+    ['mechanic_subwoofer'] = {
+        label = 'Subwoofer de Som',
+        weight = 2000,
+        stack = true,
+        close = true,
+        description = 'Módulo e alto-falante grave para som automotivo.',
+    },
+
+    ['mechanic_tyre_smoke'] = {
+        label = 'Kit Fumaça de Pneu Colorida',
+        weight = 500,
+        stack = true,
+        close = true,
+        description = 'Composto para fumaça colorida em burnout/drift.',
+    },
+
+    ['mechanic_hydraulics'] = {
+        label = 'Kit Hidráulico Lowrider',
+        weight = 4500,
+        stack = false,
+        close = true,
+        description = 'Bombas e pistões hidráulicos para suspensão ativa.',
+    },
+
+    ['mechanic_xenon'] = {
+        label = 'Kit Faróis Xenon / RGB',
+        weight = 600,
+        stack = true,
+        close = true,
+        description = 'Lâmpadas e reatores de alta luminosidade.',
+    },
+
+    ['mechanic_wheels'] = {
+        label = 'Jogo de Rodas Esportivas',
+        weight = 5000,
+        stack = false,
+        close = true,
+        description = 'Conjunto de 4 aros de liga leve.',
+    },
+
+    ['mechanic_livery'] = {
+        label = 'Kit de Decalque / Livery',
+        weight = 400,
+        stack = true,
+        close = true,
+        description = 'Adesivagem e pintura temática personalizada.',
+    },
+
+    ['mechanic_window_tint'] = {
+        label = 'Película Fumê / Insulfilm',
+        weight = 300,
+        stack = true,
+        close = true,
+        description = 'Películas de escurecimento para vidros.',
+    },
+
+
+    -- =========================================================================
+    -- NANO MECHANIC ITEMS
+    -- =========================================================================
+    ["mechanic_tablet"] = {
+        label = "Tablet de Mecânica",
+        weight = 500,
+        stack = false,
+        close = true,
+        description = "Tablet para visualizar e gerenciar ordens de serviço da oficina.",
+        client = {
+            image = "mechanic_tablet.png"
+        }
+    },
+
+    ["obd_tablet"] = {
+        label = "Scanner OBD II",
+        weight = 600,
+        stack = false,
+        close = true,
+        description = "Dispositivo de diagnóstico veicular computadorizado.",
+        client = {
+            image = "obd_tablet.png"
+        }
+    },
+
+    ["engine_lift"] = {
+        label = "Guincho Hidráulico de Motor",
+        weight = 5000,
+        stack = false,
+        close = true,
+        description = "Guincho girafa reforçado para remoção e instalação de motores.",
+        client = {
+            image = "engine.png"
+        }
+    },
+
+    ["mechanic_air_compressor"] = {
+        label = "Compressor de Ar",
+        weight = 3000,
+        stack = false,
+        close = true,
+        description = "Compressor de ar industrial para calibração e ferramentas pneumáticas.",
+        client = {
+            image = "mechanic_air_compressor.png"
+        }
+    },
+
+    ["empty_spray_gun"] = {
+        label = "Pistola de Pintura",
+        weight = 700,
+        stack = false,
+        close = true,
+        description = "Pistola de pintura profissional para funilaria e pintura automotiva.",
+        client = {
+            image = "spray_gun.png"
+        }
+    },
+
+    ["mechanic_lights_control"] = {
+        label = "Controlador de Iluminação",
+        weight = 300,
+        stack = false,
+        close = true,
+        description = "Controlador eletrônico para neons, xenons e efeitos visuais.",
+        client = {
+            image = "mechanic_lights_control.png"
+        }
+    },
+
+    ["mechanic_neon_light"] = {
+        label = "Kit Neon Sub-iluminação",
+        weight = 1000,
+        stack = true,
+        close = true,
+        description = "Fitas de LED de alta performance para sub-iluminação de veículos.",
+        client = {
+            image = "mechanic_neon_light.png"
+        }
+    },
+
+    ["mechanic_xenon_light"] = {
+        label = "Kit Farol Xenon",
+        weight = 800,
+        stack = true,
+        close = true,
+        description = "Kit de lâmpadas de descarga de xenônio para faróis.",
+        client = {
+            image = "mechanic_xenon_light.png"
+        }
+    },
+
+    ["stance_kit"] = {
+        label = "Kit Suspensão Stance",
+        weight = 2500,
+        stack = false,
+        close = true,
+        description = "Kit de cambagem e ajuste fino de suspensão.",
+        client = {
+            image = "stance_kit.png"
+        }
+    },
+
+    ["stance_controller"] = {
+        label = "Controle Stance",
+        weight = 300,
+        stack = false,
+        close = true,
+        description = "Controle remoto digital para ajuste de altura e cambagem.",
+        client = {
+            image = "stance_kit.png"
+        }
+    },
+
+    ["mechanic_suspension"] = {
+        label = "Kit Suspensão Esportiva",
+        weight = 4000,
+        stack = false,
+        close = true,
+        description = "Conjunto completo de amortecedores e molas esportivas.",
+        client = {
+            image = "suspension.png"
+        }
+    },
+
+    ["mechanic_oil_basic"] = {
+        label = "Óleo Mineral Básico",
+        weight = 1000,
+        stack = true,
+        close = true,
+        description = "Óleo lubrificante mineral padrão para motores.",
+        client = {
+            image = "mechanic_oil_basic.png"
+        }
+    },
+
+    ["mechanic_oil_semi_synth"] = {
+        label = "Óleo Semi-Sintético",
+        weight = 1000,
+        stack = true,
+        close = true,
+        description = "Óleo lubrificante semi-sintético de alta proteção.",
+        client = {
+            image = "mechanic_oil_semi_synth.png"
+        }
+    },
+
+    ["mechanic_oil_full"] = {
+        label = "Óleo 100% Sintético",
+        weight = 1000,
+        stack = true,
+        close = true,
+        description = "Óleo sintético premium de alto desempenho térmico.",
+        client = {
+            image = "mechanic_oil_full.png"
+        }
+    },
+
+    ["mechanic_oil_heavy"] = {
+        label = "Óleo Heavy Duty (Pesado)",
+        weight = 1500,
+        stack = true,
+        close = true,
+        description = "Óleo reforçado para veículos pesados, utilitários e pick-ups.",
+        client = {
+            image = "mechanic_oil_heavy.png"
+        }
+    },
+
+    ["brake_pads_basic"] = {
+        label = "Pastilhas de Freio Comuns",
+        weight = 1200,
+        stack = true,
+        close = true,
+        description = "Jogo de pastilhas de freio orgânicas padrão.",
+        client = {
+            image = "brakes.png"
+        }
+    },
+
+    ["brake_pads_semi_metallic"] = {
+        label = "Pastilhas Semi-Metálicas",
+        weight = 1400,
+        stack = true,
+        close = true,
+        description = "Jogo de pastilhas de freio semi-metálicas com maior durabilidade.",
+        client = {
+            image = "brakes.png"
+        }
+    },
+
+    ["brake_pads_full_performance"] = {
+        label = "Pastilhas de Freio Cerâmica",
+        weight = 1200,
+        stack = true,
+        close = true,
+        description = "Jogo de pastilhas de freio em cerâmica de alta performance.",
+        client = {
+            image = "brakes.png"
+        }
+    },
+
+    ["brake_pads_heavy_duty"] = {
+        label = "Pastilhas Freio Heavy Duty",
+        weight = 1800,
+        stack = true,
+        close = true,
+        description = "Jogo de pastilhas de freio reforçadas para carga pesada.",
+        client = {
+            image = "brakes.png"
+        }
+    },
+
+    ["mechanic_engine_repair_kit"] = {
+        label = "Kit Reparo de Motor",
+        weight = 2000,
+        stack = true,
+        close = true,
+        description = "Kit completo de ferramentas e peças para reparo do bloco do motor.",
+        client = {
+            image = "engine.png"
+        }
+    },
+
+    ["mechanic_body_repair_kit"] = {
+        label = "Kit Reparo de Funilaria",
+        weight = 2000,
+        stack = true,
+        close = true,
+        description = "Kit de funilaria para desamassar e reparar painéis danificados.",
+        client = {
+            image = "body.png"
+        }
+    },
+
+    ["nitro_bottle_small"] = {
+        label = "Garrafa de Nitro Pequena (5lb)",
+        weight = 2500,
+        stack = true,
+        close = true,
+        description = "Cilindro de óxido nitroso de 5 libras para injeção rápida de potência.",
+        client = {
+            image = "nitro_bottle_small.png"
+        }
+    },
+
+    ["nitro_bottle_medium"] = {
+        label = "Garrafa de Nitro Média (10lb)",
+        weight = 4500,
+        stack = true,
+        close = true,
+        description = "Cilindro de óxido nitroso de 10 libras de capacidade intermediária.",
+        client = {
+            image = "nitro_bottle_medium.png"
+        }
+    },
+
+    ["nitro_bottle_large"] = {
+        label = "Garrafa de Nitro Grande (15lb)",
+        weight = 6500,
+        stack = true,
+        close = true,
+        description = "Cilindro de óxido nitroso de 15 libras de capacidade máxima.",
+        client = {
+            image = "nitro_bottle_large.png"
+        }
+    },
+
+    ["v10_52_engine"] = {
+        label = "Motor 5.2L V10 Aspirado",
+        weight = 15000,
+        stack = false,
+        close = true,
+        description = "Motor V10 aspirado de 8.500 RPM com DNA de competição.",
+        client = { image = "engine.png" }
+    },
+
+    ["v8_40tt_engine"] = {
+        label = "Motor 4.0L V8 Twin-Turbo",
+        weight = 14000,
+        stack = false,
+        close = true,
+        description = "Motor V8 biturbo de virabrequim plano de alta rotação.",
+        client = { image = "engine.png" }
+    },
+
+    ["v8_67d_engine"] = {
+        label = "Motor 6.7L V8 Turbo Diesel",
+        weight = 18000,
+        stack = false,
+        close = true,
+        description = "Motor turbodiesel V8 de torque colossal para utilitários.",
+        client = { image = "engine.png" }
+    },
+
+    ["v6_35_engine"] = {
+        label = "Motor 3.5L V6 Aspirado",
+        weight = 12000,
+        stack = false,
+        close = true,
+        description = "Motor V6 aspirado confiável com ampla curva de torque.",
+        client = { image = "engine.png" }
+    },
+
+    ["i4_20t_engine"] = {
+        label = "Motor 2.0L 4 Cilindros Turbo",
+        weight = 9000,
+        stack = false,
+        close = true,
+        description = "Motor 4 cilindros em linha turbo esportivo.",
+        client = { image = "engine.png" }
+    },
+
+    ["i4_14t_engine"] = {
+        label = "Motor 1.4L 4 Cilindros Turbo",
+        weight = 7500,
+        stack = false,
+        close = true,
+        description = "Motor 4 cilindros compacto e econômico com turbocompressor.",
+        client = { image = "engine.png" }
+    },
+
+    ["h4_25t_engine"] = {
+        label = "Motor 2.5L Boxer 4 Turbo",
+        weight = 10000,
+        stack = false,
+        close = true,
+        description = "Motor Boxer 4 cilindros contrapostos turbo com centro de gravidade baixo.",
+        client = { image = "engine.png" }
+    },
+
+    ["v8_50_engine"] = {
+        label = "Motor 5.0L V8 Muscle",
+        weight = 14000,
+        stack = false,
+        close = true,
+        description = "Motor V8 clássico naturalmente aspirado com som encorpado.",
+        client = { image = "engine.png" }
+    },
+
+    ["v8_62sc_engine"] = {
+        label = "Motor 6.2L V8 Supercharged",
+        weight = 16000,
+        stack = false,
+        close = true,
+        description = "Motor V8 blower com compressor mecânico e torque brutal instantâneo.",
+        client = { image = "engine.png" }
+    },
+
+    ["i6_30t_engine"] = {
+        label = "Motor 3.0L 6 Cilindros em Linha Twin-Turbo",
+        weight = 13000,
+        stack = false,
+        close = true,
+        description = "Motor 6 cilindros em linha biturbo suave com entrega linear de potência.",
+        client = { image = "engine.png" }
+    },
+
+    ["v6_35tt_engine"] = {
+        label = "Motor 3.5L V6 Twin-Turbo",
+        weight = 13000,
+        stack = false,
+        close = true,
+        description = "Motor V6 biturbo de resposta ultra rápida.",
+        client = { image = "engine.png" }
+    },
+
+    ["v12_65_engine"] = {
+        label = "Motor 6.5L V12 Supercar",
+        weight = 18000,
+        stack = false,
+        close = true,
+        description = "Obra de arte da engenharia mecânica: motor V12 de alta cilindrada.",
+        client = { image = "engine.png" }
+    },
 }

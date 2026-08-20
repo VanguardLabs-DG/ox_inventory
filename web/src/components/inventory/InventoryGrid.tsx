@@ -55,7 +55,7 @@ export const InventoryGrid: React.FC<InventoryGridProps> = ({ inventory, customT
 
   return (
     <div
-      className="w-full h-full flex flex-col justify-between bg-[rgba(10,14,22,0.45)] border border-white/[0.06] rounded-[8px] p-3 shadow-2xl relative z-10 select-none"
+      className="w-full h-full flex flex-col justify-between bg-[rgba(13,17,26,0.65)] border border-white/[0.06] rounded-[8px] p-3 shadow-xl relative z-10 select-none"
       style={{ pointerEvents: isBusy ? 'none' : 'auto' }}
     >
       {/* Top Header: Title & Weight */}
@@ -69,26 +69,30 @@ export const InventoryGrid: React.FC<InventoryGridProps> = ({ inventory, customT
           <span className="text-white/40 text-[10px] font-mono">
             {(currentWeight / 1000).toFixed(1)} / {(maxWeight / 1000).toFixed(0)} KG
           </span>
-          <div className="w-14 h-1.5 bg-black/40 rounded-full overflow-hidden border border-white/10">
+          <div className="w-16 h-1.5 bg-black/40 rounded-full overflow-hidden border border-white/10">
             <div
-              className={`h-full transition-all duration-200 ${
-                weightPercent >= 90 ? 'bg-red-500' : 'bg-white/50'
+              className={`h-full transition-all duration-300 ${
+                weightPercent >= 90
+                  ? 'bg-red-500 shadow-[0_0_6px_#EF4444]'
+                  : weightPercent >= 80
+                  ? 'bg-[#FFC857] shadow-[0_0_6px_#FFC857]'
+                  : 'bg-white/60'
               }`}
-              style={{ width: `${weightPercent}%` }}
+              style={{ width: `${Math.min(weightPercent, 100)}%` }}
             />
           </div>
         </div>
       </div>
 
-      {/* Sub-header: Filters & Search */}
-      <div className="flex items-center justify-between pb-2.5 mb-2 gap-2">
+      {/* Sub-header: Ergonomic Quick Filters & Search */}
+      <div className="flex items-center justify-between pb-2 mb-2 gap-2">
         {/* Filter Pills */}
-        <div className="flex items-center space-x-1.5">
+        <div className="flex items-center space-x-1">
           {FILTER_TABS.map((tab) => (
             <button
               key={tab.id}
               onClick={() => setActiveFilter(tab.id)}
-              className={`px-2.5 py-1 rounded-[5px] text-[10px] font-semibold tracking-wider transition-all duration-140 cursor-pointer ${
+              className={`px-2.5 py-1 rounded-[4px] text-[11px] font-semibold tracking-wider uppercase transition-all duration-140 cursor-pointer ${
                 activeFilter === tab.id
                   ? 'bg-[#E5A93C]/20 border border-[#E5A93C]/40 text-[#FFC857]'
                   : 'text-white/40 hover:text-white/80 bg-white/[0.03] hover:bg-white/[0.06] border border-transparent'
@@ -105,7 +109,7 @@ export const InventoryGrid: React.FC<InventoryGridProps> = ({ inventory, customT
           placeholder="Buscar..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="w-28 bg-black/30 border border-white/[0.08] px-2.5 py-1 text-white text-[11px] placeholder:text-white/30 focus:border-[#E5A93C]/40 focus:bg-black/50 outline-none rounded-[5px] transition-all"
+          className="w-32 bg-black/35 border border-white/[0.08] px-2.5 py-1 text-white text-[11px] placeholder:text-white/30 focus:border-[#E5A93C]/40 focus:bg-black/55 outline-none rounded-[4px] transition-all"
         />
       </div>
 

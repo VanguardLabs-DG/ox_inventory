@@ -170,28 +170,27 @@ const ClothesSlot: React.FC<ClothesSlotProps> = ({ slotConfig, equippedItem, onT
       }`}
       title={equippedItem ? `${equippedItem.metadata?.label || equippedItem.name} (Duplo clique para desequipar)` : slotConfig.label}
     >
-      {/* Center Image or SVG Icon */}
-      <div className="w-full flex-1 flex items-center justify-center relative">
+      <div className="w-full h-12 rounded-[6px] bg-black/30 border border-white/[0.06] group-hover:border-[#FFC857]/40 group-hover:bg-black/50 transition-all flex items-center justify-center relative p-1.5 shadow-sm">
         {equippedItem ? (
           <img
-            className="max-h-[70%] max-w-[85%] object-contain drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]"
             src={getItemUrl(equippedItem)}
-            alt={equippedItem.metadata?.label || slotConfig.label}
+            alt={slotConfig.label}
+            className="w-full h-full object-contain filter drop-shadow-[0_2px_6px_rgba(0,0,0,0.8)]"
           />
         ) : (
-          <div className="text-white/35 group-hover:text-white/80 transition-colors flex items-center justify-center">
+          <div className="text-white/30 group-hover:text-white/70 transition-colors flex items-center justify-center">
             {slotConfig.svg}
           </div>
         )}
 
         {/* Active Indicator Dot */}
         {equippedItem && (
-          <div className="w-1.5 h-1.5 rounded-full absolute top-0 right-0 bg-[#FFC857] shadow-[0_0_6px_#FFC857]" />
+          <div className="w-1.5 h-1.5 rounded-full absolute top-1 right-1 bg-[#FFC857] shadow-[0_0_6px_#FFC857]" />
         )}
       </div>
 
       {/* Label */}
-      <span className="inventory-slot-label-text text-[10px] text-center leading-none mt-0.5 text-white/70">
+      <span className="inventory-slot-label-text text-[10px] text-center leading-none mt-0.5 text-white/60 group-hover:text-white/90 transition-colors">
         {equippedItem ? equippedItem.metadata?.label || equippedItem.name : slotConfig.label}
       </span>
     </div>
@@ -216,7 +215,7 @@ export const ClothesColumn: React.FC = () => {
   };
 
   return (
-    <div className="w-full h-full flex flex-col justify-between bg-[rgba(10,14,22,0.45)] border border-white/[0.06] rounded-[8px] p-3 shadow-2xl overflow-hidden select-none">
+    <div className="w-full h-full flex flex-col justify-between bg-[rgba(13,17,26,0.65)] border border-white/[0.06] rounded-[8px] p-3 shadow-xl overflow-hidden select-none">
       {/* Header */}
       <div className="flex items-center justify-between pb-2 mb-2 border-b border-white/[0.06]">
         <span className="text-white text-xs font-semibold tracking-wider uppercase">
